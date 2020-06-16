@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-let SpotifyPlaylist = new Schema({
+let Playlist = new Schema({
   name: {
     type: String,
     required: true,
@@ -29,6 +29,10 @@ let SpotifyPlaylist = new Schema({
     type: String,
     required: true,
   },
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
-export default mongoose.model('SpotifyPlaylist', SpotifyPlaylist);
+export default mongoose.model('Playlist', Playlist);

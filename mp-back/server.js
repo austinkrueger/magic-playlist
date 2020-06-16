@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import SpotifyUser from './controllers/models/SpotifyUser';
+import User from './app/models/user';
 
 const app = express();
 const router = express.Router();

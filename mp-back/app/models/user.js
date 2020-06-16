@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-let SpotifyUser = new Schema({
+let User = new Schema({
   email: {
     type: String,
     required: true,
@@ -13,4 +13,4 @@ let SpotifyUser = new Schema({
   },
 });
 
-export default mongoose.model('SpotifyUser', SpotifyUser);
+export default mongoose.model('User', User);
