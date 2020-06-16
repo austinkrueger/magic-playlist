@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "babel-watch server.js"
+    "test": "mocha --timeout 10000",
+    "dev": "SET NODE_ENV=dev && babel-watch server.js"
   },
   "keywords": [],
   "author": "",
