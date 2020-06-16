@@ -1,22 +1,17 @@
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import morgan from 'morgan';
-import { postPlaylist } from './src/routes/playlist';
+let express = require('express');
+let cors = require('cors');
+let bodyParser = require('body-parser');
+let mongoose = require('mongoose');
+let morgan = require('morgan');
+let config = require('config');
 let user = require('./routes/user');
 let playlist = require('./routes/playlist');
 
 const app = express();
 app.use(cors());
 
-let options = {
-  server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-  replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
-};
-
 //db connection
-mongoose.connect(config.DBHost, options);
+mongoose.connect(config.DBHost, { useNewUrlParser: true });
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -52,7 +47,6 @@ app
   .delete(playlist.deletePlaylist)
   .put(playlist.updatePlaylist);
 
-app.listen(port);
-console.log('Listening on port ' + port);
+app.listen(4000, () => console.log(`Express server running on port 4000`));
 
 module.exports = app; // for testing

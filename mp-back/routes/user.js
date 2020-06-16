@@ -1,4 +1,3 @@
-let mongoose = require('mongoose');
 let User = require('../models/user');
 
 /*
@@ -21,10 +20,10 @@ function postUser(req, res) {
   newUser
     .save()
     .then((user) => {
-      res.status(200).json({ user: 'Added Successfully' });
+      res.status(200).json({ user: 'User Added Successfully' });
     })
     .catch((err) => {
-      res.status(400).send('Failed to create new record');
+      res.status(400).send(err);
     });
 }
 

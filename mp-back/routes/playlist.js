@@ -1,4 +1,3 @@
-let mongoose = require('mongoose');
 let Playlist = require('../models/playlist');
 
 /*
@@ -22,10 +21,10 @@ function postPlaylist(req, res) {
   newPlaylist
     .save()
     .then((playlist) => {
-      res.status(200).json({ playlist: 'Added Successfully' });
+      res.status(200).json({ playlist: 'Playlist Added Successfully' });
     })
     .catch((err) => {
-      res.status(400).send('Failed to create new record');
+      res.status(400).send(err);
     });
 }
 
