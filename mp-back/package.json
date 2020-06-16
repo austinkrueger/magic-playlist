@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 10",
-    "dev": "SET NODE_ENV=dev && babel-watch server.js"
+    "dev": "SET NODE_ENV=dev && babel-watch app.js"
   },
   "keywords": [],
   "author": "",
