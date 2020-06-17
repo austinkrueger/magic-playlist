@@ -8,6 +8,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { GenerateComponent } from './components/generate/generate.component';
 import { PlaylistListComponent } from './components/playlist-list/playlist-list.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { AuthComponent } from './components/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,13 +18,11 @@ import { PlaylistComponent } from './components/playlist/playlist.component';
     DashboardComponent,
     GenerateComponent,
     PlaylistListComponent,
-    PlaylistComponent
+    PlaylistComponent,
+    AuthComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [HttpClientModule],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

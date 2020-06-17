@@ -6,6 +6,8 @@ let morgan = require('morgan');
 let config = require('config');
 let user = require('./routes/user');
 let playlist = require('./routes/playlist');
+let spotify = require('./routes/spotify');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
@@ -46,6 +48,9 @@ app
   .get(playlist.getPlaylist)
   .delete(playlist.deletePlaylist)
   .put(playlist.updatePlaylist);
+
+app.route('/auth/request-token').post(spotify.requestToken);
+app.route('/api/spotify/me').post(spotify.getMe);
 
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 
