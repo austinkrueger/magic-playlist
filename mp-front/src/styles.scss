@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+$primary: rgba(190, 110, 203, 1);
+$secondary: rgba(255, 132, 145, 1);
+$defaultFont: #fff;
+
+body,
+a {
+  font-family: 'Comfortaa', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+  color: $defaultFont;
+}
+
+input {
+  width: 30%;
+  font-size: 1.2rem;
+  font-family: 'Comfortaa', sans-serif;
+  padding: 20px 12px;
+  border-radius: 8px;
+  border-width: 0;
+}
+
+button {
+  width: 140px;
+  height: 48px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-width: 0;
+  font-family: 'Comfortaa', sans-serif;
+
+  white-space: nowrap;
+  display: inline-block;
+  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+
+  &.primary {
+    background-color: $primary;
+    color: $defaultFont;
+  }
+
+  &:hover {
+    -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.page-wrapper {
+  height: 100vh;
+  background: rgb(190, 110, 203);
+  background: linear-gradient(
+    135deg,
+    $primary 0%,
+    rgba(236, 140, 166, 1) 50%,
+    $secondary 100%
+  );
+}
