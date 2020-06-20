@@ -5,6 +5,7 @@ require('dotenv').config();
 const redirUri = 'http://localhost:4200/auth/spotify_login';
 const clientId = process.env.SPOTIFY_API_CLIENT;
 const clientSecret = process.env.SPOTIFY_API_SECRET;
+var spotifyApi = new SpotifyWebApi();
 /*
     GET request with data from Spotify Login
 */
@@ -29,7 +30,19 @@ function requestToken(req, res) {
 }
 
 // get authenticated user with api
-function getMe(req, res) {}
+function getMe(req, res) {
+  spotifyApi.setAccessToken(req.body.token);
+  spotifyApi.getMe().then(
+    function (data) {
+      console.log('Some information about the authenticated user', data.body);
+      res.status(200).json(data.body);
+    },
+    function (error) {
+      console.log('Something went wrong!', error);
+      res.status(400).send(error);
+    }
+  );
+}
 
 // post to api
 function createPlaylist() {}
