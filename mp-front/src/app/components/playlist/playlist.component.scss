@@ -1,0 +1,17 @@
+.playlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 100px;
+
+  h1.title {
+    font-size: 1.5rem;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .login-link {
+    text-decoration: none;
+  }
+}
