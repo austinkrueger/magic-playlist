@@ -36,4 +36,11 @@ export class UserService {
   deleteUser(id) {
     return this.http.get(`${this.uri}/spotify-users/delete/${id}`);
   }
+
+  getSpotifyProfile() {
+    const tokenInfo = {
+      token: localStorage.getItem('spotifyAccessToken'),
+    };
+    return this.http.post(`${this.uri}/api/spotify/me`, tokenInfo);
+  }
 }

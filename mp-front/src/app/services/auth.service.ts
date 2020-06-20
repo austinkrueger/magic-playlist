@@ -16,13 +16,22 @@ export class AuthService {
       .subscribe(
         (response) => {
           console.log(response);
-          this.router.navigate(['dashboard']);
+          localStorage.setItem('spotifyAccessToken', response['access_token']);
+          localStorage.setItem(
+            'spotifyRefreshToken',
+            response['refresh_token']
+          );
+          this.router.navigate(['me']);
         },
         (error) => {
-          console.log('something stupid happened');
+          console.log('something bad happened');
           console.error(error);
           this.router.navigate(['']);
         }
       );
   }
+
+  refreshToken() {}
+
+  logout() {}
 }
