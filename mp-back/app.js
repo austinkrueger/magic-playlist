@@ -49,8 +49,16 @@ app
   .delete(playlist.deletePlaylist)
   .put(playlist.updatePlaylist);
 
+// spotify api direct
 app.route('/auth/request-token').post(spotify.requestToken);
 app.route('/api/spotify/me').post(spotify.getMe);
+app.route('/api/spotify/search').post(spotify.searchArtists);
+app
+  .route('/api/spotify/playlist/generate/artists')
+  .post(spotify.generateTemporaryPlaylistArtistList);
+app
+  .route('/api/spotify/playlist/generate/tracks')
+  .post(spotify.generateArtistTopTracks);
 
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 
