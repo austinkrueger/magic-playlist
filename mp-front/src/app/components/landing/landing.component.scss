@@ -38,3 +38,138 @@
     text-decoration: none;
   }
 }
+
+.search-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 100px;
+  flex-wrap: wrap;
+
+  .result {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: #545454;
+    width: 120px;
+    height: 180px;
+    margin: 10px;
+    padding: 20px 40px;
+    background: #fff;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1),
+      0 3px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    -webkit-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+
+    .info-text {
+      color: rgba(190, 110, 203, 1);
+      opacity: 0;
+    }
+
+    .artist-image {
+      clip-path: circle(30px at center);
+      height: 64px;
+      width: 64px;
+      padding: 5px;
+    }
+
+    .placeholder-wrapper {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      color: #fff;
+      background: #545454;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &:hover {
+      -webkit-box-shadow: 0 14px 21px rgba(0, 0, 0, 0.1),
+        0 6px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 14px 21px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.08);
+
+      .info-text {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  background: #ffffff;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+
+.loader {
+  color: #ffffff;
+  text-indent: -9999em;
+  margin: 60px auto;
+  position: relative;
+  font-size: 11px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: '';
+}
+
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.loader:after {
+  left: 1.5em;
+}
+
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}

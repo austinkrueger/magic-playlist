@@ -12,10 +12,35 @@
     <input
       class="hero-input"
       type="text"
-      placeholder="Start typing an artist's name"
+      placeholder="Try your favorite artist, like 'Katy Perry' or 'The Beatles'"
+      [(ngModel)]="searchTerm"
+      (keydown.enter)="search()"
     />
-    <button class="hero-button primary">
+    <button class="hero-button primary" (click)="search()">
       Search
     </button>
+  </div>
+  <div class="search-results" *ngIf="searchResults.length > 0 || !showLoader">
+    <ng-container *ngFor="let item of searchResults; let i = index">
+      <div class="result" (click)="createPlaylist(item)">
+        <img
+          *ngIf="item['images'] && item['images'].length > 0"
+          [src]="item['images'][0]['url']"
+          class="artist-image"
+        />
+        <div
+          *ngIf="!item['images'] || item['images'].length === 0"
+          class="placeholder-wrapper"
+        >
+          <span>{{ item.name[0] }}</span>
+        </div>
+        <span class="artist-name">{{ item.name }}</span>
+        <span class="info-text">Click to make some magic!</span>
+      </div>
+    </ng-container>
+  </div>
+  <div class="loader-wrapper" *ngIf="showLoader">
+    <div class="loader">Loading...</div>
+    <h2 class="loading-tagline">Generating your playlist...</h2>
   </div>
 </div>
