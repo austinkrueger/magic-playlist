@@ -3,6 +3,7 @@
 $primary: rgba(190, 110, 203, 1);
 $secondary: rgba(255, 132, 145, 1);
 $defaultFont: #fff;
+$reverseFont: #545454;
 
 body,
 a {
@@ -32,9 +33,9 @@ button {
 
   white-space: nowrap;
   display: inline-block;
-  -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+  -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.11),
     0 1px 3px rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   font-weight: 600;
   text-decoration: none;
@@ -46,15 +47,20 @@ button {
     color: $defaultFont;
   }
 
+  &.no-fill {
+    background-color: #fff;
+    color: $reverseFont;
+  }
+
   &:hover {
-    -webkit-box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
-      0 1px 3px rgba(0, 0, 0, 0.08);
-    box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    -webkit-box-shadow: 0 7px 14px rgba(0, 0, 93, 0.1),
+      0 3px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
   }
 }
 
 .page-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   background: rgb(190, 110, 203);
   background: linear-gradient(
     135deg,

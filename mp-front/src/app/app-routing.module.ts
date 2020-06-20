@@ -7,7 +7,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'auth/spotify_login', component: AuthComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'me', component: DashboardComponent },
 ];
 
 @NgModule({
