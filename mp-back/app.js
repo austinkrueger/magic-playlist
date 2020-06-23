@@ -4,7 +4,6 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let config = require('config');
-let user = require('./routes/user');
 let playlist = require('./routes/playlist');
 let spotify = require('./routes/spotify');
 require('dotenv').config();
@@ -30,16 +29,6 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
 app.get('/', (req, res) => res.json({ message: 'magic-playlist api' }));
-
-app.route('/user').get(user.getUsers).post(user.postUser);
-app
-  .route('/user/:id')
-  .get(user.getUser)
-  .delete(user.deleteUser)
-  .put(user.updateUser);
-
-// app.route('/user/:user_id/playlists').get(playlist.getUserPlaylists).post(playlist.postUserPlaylist);
-// app.route('/user/:user_id/playlist/:playlist_id').get(playlist.getUserPlaylist)
 
 app.route('/playlist').get(playlist.getPlaylists).post(playlist.postPlaylist);
 

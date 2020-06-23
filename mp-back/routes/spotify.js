@@ -35,7 +35,7 @@ function getMe(req, res) {
   spotifyApi.setAccessToken(req.body.token);
   spotifyApi.getMe().then(
     function (data) {
-      console.log('Some information about the authenticated user', data.body);
+      // console.log('Some information about the authenticated user', data.body);
       res.status(200).json(data.body);
     },
     function (error) {

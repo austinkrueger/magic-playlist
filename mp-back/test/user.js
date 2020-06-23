@@ -6,7 +6,8 @@ let chaiHttp = require('chai-http');
 let app = require('../app');
 let should = chai.should();
 
-let User = require('../models/user');
+// let User = require('../models/user');
+let User = '';
 
 chai.use(chaiHttp);
 
