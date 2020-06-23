@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   userInfo: any = {};
+  currentView = 'list';
   constructor(
     private userService: UserService,
     private authService: AuthService
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
       (response) => {
         console.log(response);
         this.userInfo = response;
+        sessionStorage.setItem('spotifyUserId', this.userInfo.id);
       },
       (error) => {
         console.log(error);
