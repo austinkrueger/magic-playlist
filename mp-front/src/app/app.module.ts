@@ -11,6 +11,8 @@ import { PlaylistListComponent } from './components/playlist-list/playlist-list.
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { DurationParsePipe } from './pipes/duration-parse.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     PlaylistListComponent,
     PlaylistComponent,
     AuthComponent,
+    TruncatePipe,
+    DurationParsePipe,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [HttpClientModule],

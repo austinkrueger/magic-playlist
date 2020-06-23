@@ -14,7 +14,7 @@ a {
   color: $defaultFont;
 }
 
-input {
+input[type='text'] {
   width: 30%;
   font-size: 1.2rem;
   font-family: 'Comfortaa', sans-serif;
@@ -23,8 +23,11 @@ input {
   border-width: 0;
 }
 
+input[type='checkbox'] {
+}
+
 button {
-  width: 140px;
+  min-width: 140px;
   height: 48px;
   padding: 10px 20px;
   font-size: 16px;
