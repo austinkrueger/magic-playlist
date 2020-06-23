@@ -21,7 +21,7 @@ export class AuthService {
             'spotifyRefreshToken',
             response['refresh_token']
           );
-          this.router.navigate(['me']);
+          this.router.navigate(['me/playlists']);
         },
         (error) => {
           console.log('something bad happened');
