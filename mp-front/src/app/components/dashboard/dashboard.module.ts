@@ -7,6 +7,7 @@ import { PlaylistComponent } from '../playlist/playlist.component';
 import { PlaylistAddComponent } from '../playlist-add/playlist-add.component';
 import { TruncatePipe } from 'src/app/pipes/truncate.pipe';
 import { DurationParsePipe } from 'src/app/pipes/duration-parse.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { DurationParsePipe } from 'src/app/pipes/duration-parse.pipe';
     TruncatePipe,
     DurationParsePipe,
   ],
-  imports: [CommonModule, DashboardRoutingModule],
+  imports: [CommonModule, DashboardRoutingModule, FormsModule],
 })
 export class DashboardModule {}
