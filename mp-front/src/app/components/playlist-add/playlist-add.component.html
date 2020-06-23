@@ -1,1 +1,36 @@
-<p>playlist-add works!</p>
+<div class="search-wrapper">
+  <h1 class="search-heading">Create a new playlist</h1>
+  <input
+    class="search-input"
+    type="text"
+    placeholder="Maybe try something obscure? Like 'Smallpools' or 'Shakey Graves'"
+    [(ngModel)]="searchTerm"
+    (keydown.enter)="search()"
+  />
+  <button class="search-button primary" (click)="search()">
+    Search
+  </button>
+</div>
+<div class="search-results" *ngIf="searchResults.length > 0 || !showLoader">
+  <ng-container *ngFor="let item of searchResults; let i = index">
+    <div class="result" (click)="createPlaylist(item)">
+      <img
+        *ngIf="item['images'] && item['images'].length > 0"
+        [src]="item['images'][0]['url']"
+        class="artist-image"
+      />
+      <div
+        *ngIf="!item['images'] || item['images'].length === 0"
+        class="placeholder-wrapper"
+      >
+        <span>{{ item.name[0] }}</span>
+      </div>
+      <span class="artist-name">{{ item.name | truncate: ['20', '...'] }}</span>
+      <span class="info-text">Click to make some magic!</span>
+    </div>
+  </ng-container>
+</div>
+<div class="loader-wrapper" *ngIf="showLoader">
+  <div class="loader">Loading...</div>
+  <h2 class="loading-tagline">Generating your playlist...</h2>
+</div>
