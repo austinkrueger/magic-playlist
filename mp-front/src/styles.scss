@@ -72,3 +72,18 @@ button {
     $secondary 100%
   );
 }
+
+.content-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  margin: 0 auto;
+
+  .content {
+    align-self: center;
+    padding: 20px;
+    width: 60vw;
+    height: 60vh;
+    // background: #fff;
+  }
+}
