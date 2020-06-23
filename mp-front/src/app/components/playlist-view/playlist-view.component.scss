@@ -1,0 +1,115 @@
+.playlist-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .playlist-wrapper {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    color: #545454;
+    width: 60vw;
+    margin: 20px 0;
+    border-radius: 35px;
+    -webkit-box-shadow: 0 14px 21px rgba(0, 0, 0, 0.2),
+      0 6px 9px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 14px 21px rgba(0, 0, 0, 0.2), 0 6px 9px rgba(0, 0, 0, 0.18);
+  }
+
+  .playlist-header {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 45px 45px 0 45px;
+
+    .img-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      height: 200px;
+      width: 200px;
+      -webkit-box-shadow: 0 7px 14px rgba(100, 100, 100, 0.2),
+        0 3px 6px rgba(100, 100, 100, 0.18);
+      box-shadow: 0 7px 14px rgba(100, 100, 100, 0.2),
+        0 3px 6px rgba(100, 100, 100, 0.18);
+
+      img {
+        height: 100px;
+        width: 100px;
+      }
+    }
+
+    .playlist-info {
+      display: flex;
+      flex-direction: column;
+      margin-left: 25px;
+
+      .playlist-title {
+        font-weight: 600;
+        font-size: 2rem;
+      }
+
+      .playlist-description {
+        font-weight: 300;
+        font-size: 1rem;
+      }
+    }
+
+    .playlist-actions {
+      display: flex;
+      margin-left: auto;
+      flex-direction: column;
+      button {
+        margin: 20px;
+      }
+    }
+  }
+
+  .playlist-tracklist {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+
+    .track-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 0 40px;
+
+      .header-item.artist {
+        margin-left: 18%;
+      }
+
+      .header-item.album {
+        margin-left: 2%;
+      }
+    }
+
+    .track-item {
+      height: 20px;
+      padding: 12px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+
+      &.offset-bg {
+        background-color: #fafafa;
+      }
+
+      .track-title {
+        width: 35%;
+        white-space: nowrap;
+      }
+
+      .track-artist,
+      .track-album {
+        width: 22%;
+        overflow-x: hidden;
+        white-space: nowrap;
+      }
+
+      .track-length {
+        width: 5%;
+      }
+    }
+  }
+}
