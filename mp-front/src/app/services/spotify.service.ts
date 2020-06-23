@@ -31,4 +31,11 @@ export class SpotifyService {
       artist_id: artistId,
     });
   }
+
+  getSpotifyProfile() {
+    const tokenInfo = {
+      token: localStorage.getItem('spotifyAccessToken'),
+    };
+    return this.http.post(`${this.uri}/api/spotify/me`, tokenInfo);
+  }
 }

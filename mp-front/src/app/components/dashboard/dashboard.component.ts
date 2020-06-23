@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,26 +8,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
   userInfo: any = {};
-  currentView = 'list';
-  constructor(
-    private userService: UserService,
-    private authService: AuthService
-  ) {}
+  constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit(): void {
-    this.userService.getSpotifyProfile().subscribe(
+    this.spotifyService.getSpotifyProfile().subscribe(
       (response) => {
         console.log(response);
         this.userInfo = response;
+        sessionStorage.setItem(
+          'spotifyUserInfo',
+          JSON.stringify(this.userInfo)
+        );
         sessionStorage.setItem('spotifyUserId', this.userInfo.id);
       },
       (error) => {
         console.log(error);
       }
     );
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }

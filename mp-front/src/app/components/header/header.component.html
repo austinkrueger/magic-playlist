@@ -1,8 +1,10 @@
-<div class="main-header">
-  <h1 class="title"><a class="" routerLink="">Magic playlist</a></h1>
+<div class="main-header" *ngIf="type !== 'public'">
+  <h1 class="title" *ngIf="includeTitle">
+    Magic playlist
+  </h1>
   <div class="header-nav">
-    <button>add</button>
-    <button>list</button>
+    <button (click)="addPlaylist()">add</button>
+    <button (click)="listPlaylists()">list</button>
     <div class="avi-wrapper">
       <img
         *ngIf="userInfo['images'] && userInfo['images'].length > 0"
@@ -17,4 +19,17 @@
     </div>
     <button class="no-fill" (click)="logout()">Logout</button>
   </div>
+</div>
+
+<div
+  class="main-header hero-header"
+  [class.space-between]="includeTitle"
+  *ngIf="type === 'public'"
+>
+  <h1 class="title" *ngIf="includeTitle">
+    <a class="" routerLink="">Magic playlist</a>
+  </h1>
+  <a class="login-link" href="javascript:void(0);" (click)="loginSpotify()"
+    >Login with Spotify</a
+  >
 </div>

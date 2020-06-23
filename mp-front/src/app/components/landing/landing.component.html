@@ -1,46 +1,40 @@
-<div class="page-wrapper">
-  <div class="hero-header">
-    <a class="login-link" href="javascript:void(0);" (click)="loginSpotify()"
-      >Login with Spotify</a
-    >
-  </div>
-  <div class="hero">
-    <h1 class="hero-heading">Magic playlist</h1>
-    <h1 class="hero-tagline">
-      Generate a Spotify playlist - enter an artist's name to begin
-    </h1>
-    <input
-      class="hero-input"
-      type="text"
-      placeholder="Try your favorite artist, like 'Katy Perry' or 'The Beatles'"
-      [(ngModel)]="searchTerm"
-      (keydown.enter)="search()"
-    />
-    <button class="hero-button primary" (click)="search()">
-      Search
-    </button>
-  </div>
-  <div class="search-results" *ngIf="searchResults.length > 0 || !showLoader">
-    <ng-container *ngFor="let item of searchResults; let i = index">
-      <div class="result" (click)="createPlaylist(item)">
-        <img
-          *ngIf="item['images'] && item['images'].length > 0"
-          [src]="item['images'][0]['url']"
-          class="artist-image"
-        />
-        <div
-          *ngIf="!item['images'] || item['images'].length === 0"
-          class="placeholder-wrapper"
-        >
-          <span>{{ item.name[0] }}</span>
-        </div>
-        <span class="artist-name">{{ item.name }}</span>
-        <span class="info-text">Click to make some magic!</span>
+<app-header [userInfo]="{}" type="public" [includeTitle]="false"></app-header>
+<div class="hero">
+  <h1 class="hero-heading">Magic playlist</h1>
+  <h1 class="hero-tagline">
+    Generate a Spotify playlist - enter an artist's name to begin
+  </h1>
+  <input
+    class="hero-input"
+    type="text"
+    placeholder="Try your favorite artist, like 'Katy Perry' or 'The Beatles'"
+    [(ngModel)]="searchTerm"
+    (keydown.enter)="search()"
+  />
+  <button class="hero-button primary" (click)="search()">
+    Search
+  </button>
+</div>
+<div class="search-results" *ngIf="searchResults.length > 0 || !showLoader">
+  <ng-container *ngFor="let item of searchResults; let i = index">
+    <div class="result" (click)="createPlaylist(item)">
+      <img
+        *ngIf="item['images'] && item['images'].length > 0"
+        [src]="item['images'][0]['url']"
+        class="artist-image"
+      />
+      <div
+        *ngIf="!item['images'] || item['images'].length === 0"
+        class="placeholder-wrapper"
+      >
+        <span>{{ item.name[0] }}</span>
       </div>
-    </ng-container>
-  </div>
-  <div class="loader-wrapper" *ngIf="showLoader">
-    <div class="loader">Loading...</div>
-    <h2 class="loading-tagline">Generating your playlist...</h2>
-  </div>
+      <span class="artist-name">{{ item.name }}</span>
+      <span class="info-text">Click to make some magic!</span>
+    </div>
+  </ng-container>
+</div>
+<div class="loader-wrapper" *ngIf="showLoader">
+  <div class="loader">Loading...</div>
+  <h2 class="loading-tagline">Generating your playlist...</h2>
 </div>

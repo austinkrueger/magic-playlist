@@ -26,16 +26,6 @@ export class LandingComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  loginSpotify(): void {
-    // redirect to spotify auth page
-    // spoitfy api client id e2e60f39a4e44e9ba073f4594dfd4e73
-    const scopes = 'user-read-private user-read-email';
-    const clientId = environment.clientId;
-    const redirUri = environment.redirUri;
-    const uri = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scopes=${scopes}&redirect_uri=${redirUri}`;
-    window.location.href = uri;
-  }
-
   search(): void {
     if (this.searchTerm) {
       const searchSub: Subscription = this.spotifyService
@@ -88,7 +78,9 @@ export class LandingComponent implements OnInit, OnDestroy {
               'userGeneratedTempPlaylist',
               JSON.stringify(this.trackList)
             );
-            this.router.navigate(['playlist']);
+            const tempId =
+              Math.random().toString(36).substring(2) + Date.now().toString(36);
+            this.router.navigate(['magic-playlist', tempId]);
           } else {
             this.getPlaylistTracks(artistList, index + 1);
           }

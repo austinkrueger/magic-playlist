@@ -1,8 +1,10 @@
-<div class="page-wrapper">
-  <app-header [userInfo]="userInfo"></app-header>
-  <div class="content-wrapper">
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
+<app-header
+  [userInfo]="userInfo"
+  type="auth"
+  [includeTitle]="true"
+></app-header>
+<div class="content-wrapper">
+  <div class="content">
+    <router-outlet></router-outlet>
   </div>
 </div>
