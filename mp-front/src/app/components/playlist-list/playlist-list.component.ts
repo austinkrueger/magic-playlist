@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-playlist-list',
@@ -6,13 +6,19 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./playlist-list.component.scss'],
 })
 export class PlaylistListComponent implements OnInit {
-  @Input() userInfo: any = {};
   playlists: any[] = [];
+  @Output() viewChange = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {
     this.playlists = PLAYLISTS;
+
+    // make call to playlist service to get playlists
+  }
+
+  viewPlaylist(playlistId): void {
+    this.viewChange.emit(playlistId);
   }
 }
 

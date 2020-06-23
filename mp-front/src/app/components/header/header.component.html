@@ -1,0 +1,20 @@
+<div class="main-header">
+  <h1 class="title"><a class="" routerLink="">Magic playlist</a></h1>
+  <div class="header-nav">
+    <button>add</button>
+    <button>list</button>
+    <div class="avi-wrapper">
+      <img
+        *ngIf="userInfo['images'] && userInfo['images'].length > 0"
+        [src]="userInfo['images'][0]['url']"
+      />
+      <span
+        *ngIf="
+          !userInfo['images'] ||
+          (userInfo['images'] && userInfo['images'].length === 0)
+        "
+      ></span>
+    </div>
+    <button class="no-fill" (click)="logout()">Logout</button>
+  </div>
+</div>
