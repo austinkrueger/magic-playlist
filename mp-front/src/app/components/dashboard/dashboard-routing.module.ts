@@ -10,12 +10,12 @@ const routes: Routes = [
     component: PlaylistListComponent,
   },
   {
-    path: 'playlists/:id',
-    component: PlaylistComponent,
-  },
-  {
     path: 'playlists/add',
     component: PlaylistAddComponent,
+  },
+  {
+    path: 'playlists/:id',
+    component: PlaylistComponent,
   },
 ];
 
