@@ -8,7 +8,8 @@
       </div>
       <div class="playlist-info">
         <h1 class="playlist-title" *ngIf="!editingTitle" (click)="editTitle()">
-          {{ playlistTitle }} <span class="edit-icon"></span>
+          {{ playlistTitle | truncate: ['15', '...'] }}
+          <span class="edit-icon"></span>
         </h1>
         <input
           #title

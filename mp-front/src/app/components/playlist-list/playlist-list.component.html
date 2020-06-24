@@ -1,14 +1,38 @@
 <div class="playlist-list-wrapper">
-  <ng-container *ngFor="let playlist of playlists">
-    <div class="playlist-item">
-      <div class="info">
-        <span class="name">{{ playlist.name }}</span>
-        <span class="description">{{ playlist.description }}</span>
+  <ng-container *ngIf="playlists.length > 0">
+    <ng-container *ngFor="let playlist of playlists">
+      <div class="playlist-item">
+        <div class="info">
+          <span class="name">{{ playlist.name }}</span>
+          <span class="description">{{ playlist.description }}</span>
+        </div>
+        <div class="actions">
+          <a class="action-link" href="javascript:void(0);"
+            >View this playlist</a
+          >
+          <a
+            *ngIf="playlist['url']"
+            class="action-link"
+            href="javascript:void(0);"
+            >Open in Spotify</a
+          >
+          <a
+            *ngIf="!playlist['url']"
+            class="action-link"
+            href="javascript:void(0);"
+            >Export to Spotify</a
+          >
+        </div>
       </div>
-      <div class="actions">
-        <a class="action-link" href="javascript:void(0);">View this playlist</a>
-        <a class="action-link" href="javascript:void(0);">Open in Spotify</a>
-      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="playlists.length === 0">
+    <div class="no-playlists">
+      <h1 class="header">Nothing here yet!</h1>
+      <h1 class="tagline">Any playlists you create will show up right here</h1>
+      <button class="primary none-button" (click)="createNew()">
+        Create a playlist
+      </button>
     </div>
   </ng-container>
 </div>

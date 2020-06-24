@@ -45,6 +45,8 @@
       .playlist-title {
         font-weight: 600;
         font-size: 2rem;
+        max-width: 20vw;
+        white-space: nowrap;
       }
 
       .title-input {
@@ -58,6 +60,7 @@
       .playlist-description {
         font-weight: 300;
         font-size: 1rem;
+        max-width: 20vw;
       }
 
       .desc-input {

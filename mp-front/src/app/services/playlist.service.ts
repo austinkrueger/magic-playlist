@@ -21,41 +21,18 @@ export class PlaylistService {
   }
 
   addPlaylist(playlist: any): Observable<any> {
-    const headers = new HttpHeaders();
-    const token = '';
-    headers.append('Authorization', `Bearer ${token}`);
-    return this.http.post(
-      `${this.uri}/playlist`,
-      {
-        playlist: playlist,
-      },
-      {
-        headers: headers,
-      }
-    );
+    return this.http.post(`${this.uri}/playlist`, {
+      playlist: playlist,
+    });
   }
 
   updatePlaylist(playlist: any): Observable<any> {
-    const headers = new HttpHeaders();
-    const token = '';
-    headers.append('Authorization', `Bearer ${token}`);
-    return this.http.put(
-      `${this.uri}/playlist/${playlist.id}`,
-      {
-        playlist: playlist,
-      },
-      {
-        headers: headers,
-      }
-    );
+    return this.http.put(`${this.uri}/playlist/${playlist.id}`, {
+      playlist: playlist,
+    });
   }
 
   deletePlaylist(playlistId: string): Observable<any> {
-    const headers = new HttpHeaders();
-    const token = '';
-    headers.append('Authorization', `Bearer ${token}`);
-    return this.http.delete(`${this.uri}/playlist/${playlistId}`, {
-      headers: headers,
-    });
+    return this.http.delete(`${this.uri}/playlist/${playlistId}`);
   }
 }

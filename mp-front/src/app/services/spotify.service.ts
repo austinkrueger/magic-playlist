@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -36,6 +37,39 @@ export class SpotifyService {
     const tokenInfo = {
       token: localStorage.getItem('spotifyAccessToken'),
     };
-    return this.http.post(`${this.uri}/api/spotify/me`, tokenInfo);
+    return this.http.post(`${this.uri}/api/spotify/me`, tokenInfo).subscribe(
+      (res: any) => {
+        console.log(res);
+        const expiresAt = moment().add(res.expiresIn, 'second');
+        sessionStorage.setItem('spotifyUserInfo', JSON.stringify(res.data));
+        sessionStorage.setItem('spotifyUserId', res.data.id);
+        localStorage.setItem('id_token', res.idToken);
+        localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
+  invalidateToken() {
+    sessionStorage.removeItem('spotifyUserInfo');
+    sessionStorage.removeItem('spotifyUserId');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
+  }
+
+  public isLoggedIn() {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
+  getExpiration() {
+    const expiration = localStorage.getItem('expires_at');
+    const expiresAt = JSON.parse(expiration);
+    return moment(expiresAt);
   }
 }

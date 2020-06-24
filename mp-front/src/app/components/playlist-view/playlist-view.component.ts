@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { PlaylistService } from 'src/app/services/playlist.service';
+import { ToastrService } from 'ngx-toastr';
 
 // authenticated playlist component
 @Component({
@@ -17,7 +19,11 @@ export class PlaylistViewComponent implements OnInit {
 
   @ViewChild('title') title: ElementRef<any>;
   @ViewChild('desc') desc: ElementRef<any>;
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private playlistService: PlaylistService,
+    private toast: ToastrService
+  ) {}
 
   ngOnInit(): void {
     console.log(
@@ -27,13 +33,13 @@ export class PlaylistViewComponent implements OnInit {
       sessionStorage.getItem('userGeneratedTempPlaylist')
     );
     if (!this.playlist) {
-      this.router.navigate(['']);
+      this.router.navigate(['/me/playlists']);
     }
   }
 
   createNew(): void {
     sessionStorage.setItem('userGeneratedTempPlaylist', null);
-    this.router.navigate(['']);
+    this.router.navigate(['/me/playlists/add']);
   }
 
   getArtists(track: any): string {
@@ -49,6 +55,26 @@ export class PlaylistViewComponent implements OnInit {
 
   savePlaylist(): void {
     console.log(this.playlist);
+    const newPlaylist: any = {
+      tracks: this.playlist,
+      name: this.playlistTitle,
+      description: this.playlistDesc,
+      collaborative: false,
+      public: true,
+      spotify_uid: sessionStorage.getItem('spotifyUserId'),
+    };
+    this.playlistService.addPlaylist(newPlaylist).subscribe(
+      (response: any) => {
+        if (response['playlist']) {
+          this.toast.success(response['playlist']);
+          this.router.navigate(['/me/playlists']);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.toast.error(error);
+      }
+    );
   }
 
   editTitle(): void {

@@ -57,3 +57,24 @@
     }
   }
 }
+
+.no-playlists {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .header {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .none-button {
+    margin: 20px;
+  }
+}

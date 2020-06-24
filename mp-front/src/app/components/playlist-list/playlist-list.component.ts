@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PlaylistService } from 'src/app/services/playlist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-playlist-list',
@@ -7,55 +9,29 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PlaylistListComponent implements OnInit {
   playlists: any[] = [];
-  @Output() viewChange = new EventEmitter();
 
-  constructor() {}
+  constructor(
+    private playlistService: PlaylistService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.playlists = PLAYLISTS;
-
+    // this.playlists = PLAYLISTS;
     // make call to playlist service to get playlists
+    this.playlistService
+      .getPlaylistsByUser(sessionStorage.getItem('spotifyUserId'))
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          this.playlists = response;
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
   }
 
-  viewPlaylist(playlistId): void {
-    this.viewChange.emit(playlistId);
+  createNew() {
+    this.router.navigate(['/me/playlists/add']);
   }
 }
-
-const PLAYLISTS: any[] = [
-  {
-    name: 'Playlist 1',
-    description: 'This playlist is really cool',
-    artists: [
-      'Billy Joel',
-      'Michael Jackson',
-      'Matchbox Twenty',
-      'Earl Sweatshirt',
-    ],
-    url: 'https://spotify.com',
-    collaborative: false,
-    public: true,
-  },
-  {
-    name: 'Playlist 2',
-    description: '',
-    artists: ['B.B. King', 'Hoobastank', 'Disturbed', 'Frank Ocean'],
-    url: 'https://spotify.com',
-    collaborative: true,
-    public: true,
-  },
-  {
-    name: 'My first ever playlist!',
-    description:
-      'this is my first playlist I have ever made, it is so cool and awesome, enjoy!',
-    artists: [
-      'The White Stripes',
-      'The Black Keys',
-      'Blues Brothers',
-      'Johnny Cash',
-    ],
-    url: 'https://spotify.com',
-    collaborative: false,
-    public: false,
-  },
-];
