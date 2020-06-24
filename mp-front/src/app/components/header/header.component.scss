@@ -13,6 +13,16 @@
 }
 .header-nav {
   display: flex;
+  align-items: center;
+
+  .nav-link {
+    text-decoration: none;
+    margin: 0 10px;
+
+    &:hover {
+      color: #545454;
+    }
+  }
 
   .avi-wrapper {
     height: 40px;
@@ -47,5 +57,9 @@
 
   .login-link {
     text-decoration: none;
+
+    &:hover {
+      color: #545454;
+    }
   }
 }

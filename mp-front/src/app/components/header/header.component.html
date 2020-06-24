@@ -3,8 +3,10 @@
     Magic playlist
   </h1>
   <div class="header-nav">
-    <button (click)="addPlaylist()">add</button>
-    <button (click)="listPlaylists()">list</button>
+    <a class="nav-link" routerLink="/me/playlists/add">New Playlist</a>
+    <a class="nav-link" routerLink="/me/playlists">My Playlists</a>
+    <!-- <button (click)="addPlaylist()">add</button>
+    <button (click)="listPlaylists()">list</button> -->
     <div class="avi-wrapper">
       <img
         *ngIf="userInfo['images'] && userInfo['images'].length > 0"

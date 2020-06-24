@@ -14,15 +14,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    window.addEventListener(
-      'storage',
-      function (event) {
-        console.log(event);
-      },
-      false
-    );
-  }
+  ngOnInit(): void {}
 
   loginSpotify(): void {
     // redirect to spotify auth page
@@ -40,13 +32,5 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('spotifyAccessToken');
     localStorage.removeItem('spotifyRefreshToken');
     this.router.navigate(['/logout']);
-  }
-
-  addPlaylist(): void {
-    this.router.navigate(['me/playlists/add']);
-  }
-
-  listPlaylists(): void {
-    this.router.navigate(['me/playlists']);
   }
 }
