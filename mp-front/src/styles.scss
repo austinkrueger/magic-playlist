@@ -14,13 +14,15 @@ a {
   color: $defaultFont;
 }
 
-input[type='text'] {
+input[type='text'],
+textarea {
   width: 30%;
   font-size: 1.2rem;
   font-family: 'Comfortaa', sans-serif;
   padding: 20px 12px;
   border-radius: 8px;
   border-width: 0;
+  resize: none;
 }
 
 input[type='checkbox'] {

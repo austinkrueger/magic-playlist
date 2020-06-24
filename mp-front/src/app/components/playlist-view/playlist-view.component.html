@@ -7,12 +7,42 @@
         </ng-container>
       </div>
       <div class="playlist-info">
-        <h1 class="playlist-title">New Playlist #1</h1>
-        <h1 class="playlist-description">Here's your playlist!</h1>
+        <h1 class="playlist-title" *ngIf="!editingTitle" (click)="editTitle()">
+          {{ playlistTitle }} <span class="edit-icon"></span>
+        </h1>
+        <input
+          #title
+          type="text"
+          class="title-input"
+          [class.hidden]="!editingTitle"
+          [class.visible]="editingTitle"
+          [placeholder]="playlistTitle"
+          [(ngModel)]="playlistTitle"
+          (blur)="editingTitle = false"
+          (keyup.enter)="editingTitle = false"
+        />
+        <h1
+          class="playlist-description"
+          *ngIf="!editingDesc"
+          (click)="editDesc()"
+        >
+          {{ playlistDesc }} <span class="edit-icon"></span>
+        </h1>
+        <textarea
+          #desc
+          type="text"
+          class="desc-input"
+          [class.hidden]="!editingDesc"
+          [class.visible]="editingDesc"
+          [placeholder]="playlistDesc"
+          [(ngModel)]="playlistDesc"
+          (blur)="editingDesc = false"
+          (keyup.enter)="editingDesc = false"
+        ></textarea>
       </div>
 
       <div class="playlist-actions">
-        <button class="primary" (click)="loginSpotify()">
+        <button class="primary" (click)="savePlaylist()">
           Save this playlist
         </button>
         <button class="primary" (click)="createNew()">

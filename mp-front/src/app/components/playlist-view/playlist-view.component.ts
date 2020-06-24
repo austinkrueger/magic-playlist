@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -10,6 +10,13 @@ import { environment } from 'src/environments/environment';
 })
 export class PlaylistViewComponent implements OnInit {
   playlist: any;
+  playlistTitle = 'New Playlist';
+  playlistDesc = 'Enter a description for your playlist!';
+  editingTitle = false;
+  editingDesc = false;
+
+  @ViewChild('title') title: ElementRef<any>;
+  @ViewChild('desc') desc: ElementRef<any>;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -22,16 +29,6 @@ export class PlaylistViewComponent implements OnInit {
     if (!this.playlist) {
       this.router.navigate(['']);
     }
-  }
-
-  loginSpotify(): void {
-    // redirect to spotify auth page
-    // spoitfy api client id e2e60f39a4e44e9ba073f4594dfd4e73
-    const scopes = 'user-read-private user-read-email';
-    const clientId = environment.clientId;
-    const redirUri = environment.redirUri;
-    const uri = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scopes=${scopes}&redirect_uri=${redirUri}`;
-    window.location.href = uri;
   }
 
   createNew(): void {
@@ -48,5 +45,23 @@ export class PlaylistViewComponent implements OnInit {
       artistStr += track.artists[i].name;
     }
     return artistStr;
+  }
+
+  savePlaylist(): void {
+    console.log(this.playlist);
+  }
+
+  editTitle(): void {
+    this.editingTitle = true;
+    setTimeout(() => {
+      this.title.nativeElement.focus();
+    }, 0);
+  }
+
+  editDesc(): void {
+    this.editingDesc = true;
+    setTimeout(() => {
+      this.desc.nativeElement.focus();
+    }, 0);
   }
 }
