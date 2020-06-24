@@ -5,6 +5,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'auth/spotify_login', component: AuthComponent },
   { path: 'logout', component: LogoutComponent },
   { path: '', component: LandingComponent },
+  { path: '**', component: FourOhFourComponent },
 ];
 
 @NgModule({

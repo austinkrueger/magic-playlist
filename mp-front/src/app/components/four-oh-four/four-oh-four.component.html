@@ -1,0 +1,13 @@
+<app-header [userInfo]="{}" type="public" [includeTitle]="true"></app-header>
+<div class="content-wrapper">
+  <div class="content">
+    <div class="not-found-wrapper">
+      <h1 class="title">Oops! It seems you are lost.</h1>
+      <h1 class="tagline">Unfortunately, this page does not exist.</h1>
+      <div class="actions">
+        <button class="primary nav-button" (click)="goBack()">Go Back</button>
+        <button class="primary nav-button" (click)="goHome()">Go Home</button>
+      </div>
+    </div>
+  </div>
+</div>

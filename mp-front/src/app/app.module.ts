@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { PipesModule } from './pipes/pipes.module';
+import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { PipesModule } from './pipes/pipes.module';
     HeaderComponent,
     LogoutComponent,
     PlaylistComponent,
+    FourOhFourComponent,
   ],
   imports: [
     BrowserModule,
