@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import * as moment from 'moment';
 export class SpotifyService {
   uri = 'http://localhost:4000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   searchArtists(searchTerm: string): Observable<any> {
     return this.http.post(`${this.uri}/api/spotify/search`, {
@@ -45,6 +46,7 @@ export class SpotifyService {
         sessionStorage.setItem('spotifyUserId', res.data.id);
         localStorage.setItem('id_token', res.idToken);
         localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+        this.router.navigate(['/me/playlists']);
       },
       (error: any) => {
         console.log(error);
