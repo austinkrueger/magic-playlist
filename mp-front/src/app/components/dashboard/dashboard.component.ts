@@ -11,19 +11,7 @@ export class DashboardComponent implements OnInit {
   constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit(): void {
-    this.spotifyService.getSpotifyProfile().subscribe(
-      (response) => {
-        console.log(response);
-        this.userInfo = response;
-        sessionStorage.setItem(
-          'spotifyUserInfo',
-          JSON.stringify(this.userInfo)
-        );
-        sessionStorage.setItem('spotifyUserId', this.userInfo.id);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.spotifyService.getSpotifyProfile();
+    this.userInfo = JSON.parse(sessionStorage.getItem('spotifyUserInfo'));
   }
 }

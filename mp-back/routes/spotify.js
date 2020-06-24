@@ -2,10 +2,15 @@ let SpotifyWebApi = require('spotify-web-api-node');
 let axios = require('axios');
 require('dotenv').config();
 let spotifyService = require('../services/spotify');
+let jwt = require('jsonwebtoken');
+let fs = require('fs');
 
 const redirUri = 'http://localhost:4200/auth/spotify_login';
 const clientId = process.env.SPOTIFY_API_CLIENT;
 const clientSecret = process.env.SPOTIFY_API_SECRET;
+
+const RSA_PRIVATE_KEY = fs.readFileSync('./config/jwtRS256.key');
+
 var spotifyApi = new SpotifyWebApi();
 /*
     GET request with data from Spotify Login
@@ -35,8 +40,20 @@ function getMe(req, res) {
   spotifyApi.setAccessToken(req.body.token);
   spotifyApi.getMe().then(
     function (data) {
+      // create our jwt token for accessing data
+      const expiresIn = 2400;
+      const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+        algorithm: 'RS256',
+        expiresIn: expiresIn,
+        subject: data.body.id,
+      });
       // console.log('Some information about the authenticated user', data.body);
-      res.status(200).json(data.body);
+      const returnData = {
+        data: data.body,
+        idToken: jwtBearerToken,
+        expiresIn: expiresIn,
+      };
+      res.status(200).json(returnData);
     },
     function (error) {
       console.log('Something went wrong!', error);

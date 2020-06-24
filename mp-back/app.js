@@ -4,6 +4,8 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let config = require('config');
+let expressJwt = require('express-jwt');
+let fs = require('fs');
 let playlist = require('./routes/playlist');
 let spotify = require('./routes/spotify');
 require('dotenv').config();
@@ -22,6 +24,11 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
   app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
 }
 
+const RSA_PUBLIC_KEY = fs.readFileSync('./config/jwtRS256.key.pub');
+const checkIfAuthenticated = expressJwt({
+  secret: RSA_PUBLIC_KEY,
+});
+
 //parse application/json and look for raw text
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,13 +37,16 @@ app.use(bodyParser.json({ type: 'application/json' }));
 
 app.get('/', (req, res) => res.json({ message: 'magic-playlist api' }));
 
-app.route('/playlist').get(playlist.getPlaylists).post(playlist.postPlaylist);
+app
+  .route('/playlist')
+  .get(playlist.getPlaylists)
+  .post(checkIfAuthenticated, playlist.postPlaylist);
 
 app
   .route('/playlist/:id')
   .get(playlist.getPlaylist)
-  .delete(playlist.deletePlaylist)
-  .put(playlist.updatePlaylist);
+  .delete(checkIfAuthenticated, playlist.deletePlaylist)
+  .put(checkIfAuthenticated, playlist.updatePlaylist);
 
 // spotify api direct
 app.route('/auth/request-token').post(spotify.requestToken);

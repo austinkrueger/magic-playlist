@@ -5,10 +5,16 @@ let Playlist = require('../models/playlist');
     /playlist
 */
 function getPlaylists(req, res) {
-  let query = Playlist.find({});
+  console.log(req.query);
+  let query = Playlist.find({ spotify_uid: req.query.user_id });
   query.exec((err, playlists) => {
-    if (err) res.send(err);
-    else res.json(playlists);
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      console.log(playlists);
+      res.json(playlists);
+    }
   });
 }
 // need GET by USER ID request
@@ -17,7 +23,7 @@ function getPlaylists(req, res) {
     /playlist
  */
 function postPlaylist(req, res) {
-  var newPlaylist = new Playlist(req.body);
+  var newPlaylist = new Playlist(req.body.playlist);
   newPlaylist
     .save()
     .then((playlist) => {
