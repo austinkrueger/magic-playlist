@@ -1,56 +1,49 @@
-<div class="page-wrapper">
-  <div class="top-header">
-    <h1 class="title"><a class="" routerLink="">Magic playlist</a></h1>
-    <a class="login-link" href="javascript:void(0);" (click)="loginSpotify()"
-      >Login with Spotify</a
-    >
-  </div>
-  <div class="playlist-content">
-    <div class="playlist-wrapper">
-      <div class="playlist-header">
-        <div class="img-wrapper">
-          <ng-container *ngFor="let track of playlist; let i = index">
-            <img *ngIf="i <= 3" [src]="track.album.images[1].url" />
-          </ng-container>
-        </div>
-        <div class="playlist-info">
-          <h1 class="playlist-title">New Playlist #1</h1>
-          <h1 class="playlist-description">Here's your playlist!</h1>
-        </div>
-
-        <div class="playlist-actions">
-          <button class="primary" (click)="loginSpotify()">
-            Save this playlist
-          </button>
-          <button class="primary" (click)="createNew()">
-            Create new playlist
-          </button>
-        </div>
-      </div>
-      <div class="playlist-tracklist">
-        <div class="track-header">
-          <span class="header-item title">Title</span>
-          <span class="header-item artist push-right">Artist</span>
-          <span class="header-item album">Album</span>
-          <span class="header-item length">Length</span>
-        </div>
-        <ng-container *ngFor="let track of playlist; let even = even">
-          <div class="track-item" [class.offset-bg]="even">
-            <span class="track-title">{{
-              track.name | truncate: ['35', '...']
-            }}</span>
-            <span class="track-artist">
-              {{ getArtists(track) | truncate: ['20', '...'] }}
-            </span>
-            <span class="track-album">{{
-              track.album.name | truncate: ['20', '...']
-            }}</span>
-            <span class="track-length">{{
-              track.duration_ms | durationParse
-            }}</span>
-          </div>
+<app-header [userInfo]="{}" type="public" [includeTitle]="true"></app-header>
+<div class="playlist-content">
+  <div class="playlist-wrapper">
+    <div class="playlist-header">
+      <div class="img-wrapper">
+        <ng-container *ngFor="let track of playlist; let i = index">
+          <img *ngIf="i <= 3" [src]="track.album.images[1].url" />
         </ng-container>
       </div>
+      <div class="playlist-info">
+        <h1 class="playlist-title">New Playlist #1</h1>
+        <h1 class="playlist-description">Here's your playlist!</h1>
+      </div>
+
+      <div class="playlist-actions">
+        <button class="primary" (click)="loginSpotify()">
+          Save this playlist
+        </button>
+        <button class="primary" (click)="createNew()">
+          Create new playlist
+        </button>
+      </div>
+    </div>
+    <div class="playlist-tracklist">
+      <div class="track-header">
+        <span class="header-item title">Title</span>
+        <span class="header-item artist push-right">Artist</span>
+        <span class="header-item album">Album</span>
+        <span class="header-item length">Length</span>
+      </div>
+      <ng-container *ngFor="let track of playlist; let even = even">
+        <div class="track-item" [class.offset-bg]="even">
+          <span class="track-title">{{
+            track.name | truncate: ['35', '...']
+          }}</span>
+          <span class="track-artist">
+            {{ getArtists(track) | truncate: ['20', '...'] }}
+          </span>
+          <span class="track-album">{{
+            track.album.name | truncate: ['20', '...']
+          }}</span>
+          <span class="track-length">{{
+            track.duration_ms | durationParse
+          }}</span>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

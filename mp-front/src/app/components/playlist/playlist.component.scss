@@ -1,22 +1,3 @@
-.top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px 100px;
-
-  h1.title {
-    font-size: 1.5rem;
-    margin: 0;
-    a {
-      text-decoration: none;
-    }
-  }
-
-  .login-link {
-    text-decoration: none;
-  }
-}
-
 .playlist-content {
   display: flex;
   justify-content: center;

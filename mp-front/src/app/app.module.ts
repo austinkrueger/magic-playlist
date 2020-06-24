@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { PlaylistComponent } from './components/playlist/playlist.component';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -21,8 +23,15 @@ import { LogoutComponent } from './components/logout/logout.component';
     DashboardComponent,
     HeaderComponent,
     LogoutComponent,
+    PlaylistComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    PipesModule,
+  ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent],
 })

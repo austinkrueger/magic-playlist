@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
+// public playlist component
 @Component({
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',

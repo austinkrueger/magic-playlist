@@ -77,7 +77,8 @@ export class PlaylistAddComponent implements OnInit {
               'userGeneratedTempPlaylist',
               JSON.stringify(this.trackList)
             );
-            const tempId = uuidv4();
+            const tempId =
+              Math.random().toString(36).substring(2) + Date.now().toString(36);
             this.router.navigate(['me/playlists', tempId]);
           } else {
             this.getPlaylistTracks(artistList, index + 1);
@@ -94,13 +95,4 @@ export class PlaylistAddComponent implements OnInit {
         }
       );
   }
-}
-
-function uuidv4() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  );
 }
