@@ -15,9 +15,12 @@ export class AuthService {
     private spotifyService: SpotifyService
   ) {}
 
-  authorizeSpotifyCode(authCode: string) {
+  authorizeSpotifyCode(authCode: string, redirUri: string) {
     this.http
-      .post(`${this.uri}/auth/request-token`, { code: authCode })
+      .post(`${this.uri}/auth/request-token`, {
+        code: authCode,
+        redirUri: redirUri,
+      })
       .subscribe(
         (response) => {
           console.log(response);
@@ -26,7 +29,11 @@ export class AuthService {
             'spotifyRefreshToken',
             response['refresh_token']
           );
-          this.spotifyService.getSpotifyProfile();
+          if (redirUri.includes('?return_to')) {
+            this.spotifyService.getSpotifyProfile(true);
+          } else {
+            this.spotifyService.getSpotifyProfile();
+          }
         },
         (error) => {
           console.log('something bad happened');

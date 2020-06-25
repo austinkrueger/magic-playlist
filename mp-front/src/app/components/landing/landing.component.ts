@@ -80,6 +80,7 @@ export class LandingComponent implements OnInit, OnDestroy {
             );
             const tempId =
               Math.random().toString(36).substring(2) + Date.now().toString(36);
+            sessionStorage.setItem('tempPlaylistId', tempId);
             this.router.navigate(['magic-playlist', tempId]);
           } else {
             this.getPlaylistTracks(artistList, index + 1);

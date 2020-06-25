@@ -8,10 +8,10 @@ function getPlaylists(req, res) {
   let query = Playlist.find({ spotify_uid: req.query.user_id });
   query.exec((err, playlists) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
       res.send(err);
     } else {
-      console.log(playlists);
+      // console.log(playlists);
       res.json(playlists);
     }
   });

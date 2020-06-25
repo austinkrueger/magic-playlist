@@ -5,7 +5,8 @@ let spotifyService = require('../services/spotify');
 let jwt = require('jsonwebtoken');
 let fs = require('fs');
 
-const redirUri = 'http://localhost:4200/auth/spotify_login';
+// const redirUri =
+// 'http://localhost:4200/auth/spotify_login?return_to=playlist_view';
 const clientId = process.env.SPOTIFY_API_CLIENT;
 const clientSecret = process.env.SPOTIFY_API_SECRET;
 
@@ -24,7 +25,7 @@ function requestToken(req, res) {
   axios
     .post(
       'https://accounts.spotify.com/api/token',
-      `grant_type=authorization_code&code=${req.body.code}&redirect_uri=${redirUri}&client_id=${clientId}&client_secret=${clientSecret}`,
+      `grant_type=authorization_code&code=${req.body.code}&redirect_uri=${req.body.redirUri}&client_id=${clientId}&client_secret=${clientSecret}`,
       config
     )
     .then(function (response) {

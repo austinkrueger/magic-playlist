@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +14,10 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this._ar.queryParams.subscribe((res) => {
       if (!res['error']) {
-        this.authService.authorizeSpotifyCode(res['code']);
+        const redirUri = res['return_to']
+          ? environment.redirUri + '?return_to=playlist_view'
+          : environment.redirUri;
+        this.authService.authorizeSpotifyCode(res['code'], redirUri);
       }
     });
   }

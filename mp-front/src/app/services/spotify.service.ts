@@ -34,7 +34,7 @@ export class SpotifyService {
     });
   }
 
-  getSpotifyProfile() {
+  getSpotifyProfile(viewPlaylist?: boolean) {
     const tokenInfo = {
       token: localStorage.getItem('spotifyAccessToken'),
     };
@@ -46,7 +46,14 @@ export class SpotifyService {
         sessionStorage.setItem('spotifyUserId', res.data.id);
         localStorage.setItem('id_token', res.idToken);
         localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
-        this.router.navigate(['/me/playlists']);
+        if (viewPlaylist) {
+          this.router.navigate([
+            '/me/playlists',
+            sessionStorage.getItem('tempPlaylistId'),
+          ]);
+        } else {
+          this.router.navigate(['/me/playlists']);
+        }
       },
       (error: any) => {
         console.log(error);

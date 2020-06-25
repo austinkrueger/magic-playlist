@@ -29,7 +29,7 @@ export class PlaylistComponent implements OnInit {
     // spoitfy api client id e2e60f39a4e44e9ba073f4594dfd4e73
     const scopes = 'user-read-private user-read-email';
     const clientId = environment.clientId;
-    const redirUri = environment.redirUri;
+    const redirUri = environment.redirUri + '?return_to=playlist_view';
     const uri = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scopes=${scopes}&redirect_uri=${redirUri}`;
     window.location.href = uri;
   }
