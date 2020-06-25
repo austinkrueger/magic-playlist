@@ -5,7 +5,6 @@ let Playlist = require('../models/playlist');
     /playlist
 */
 function getPlaylists(req, res) {
-  console.log(req.query);
   let query = Playlist.find({ spotify_uid: req.query.user_id });
   query.exec((err, playlists) => {
     if (err) {
@@ -62,11 +61,26 @@ function deletePlaylist(req, res) {
 */
 function updatePlaylist(req, res) {
   Playlist.findById({ _id: req.params.id }, (err, playlist) => {
-    if (err) res.send(err);
-    Object.assign(playlist, req.body).save((err, playlist) => {
-      if (err) res.send(err);
-      res.json({ message: 'Playlist updated!', playlist });
-    });
+    if (err) res.status(400).send(err);
+
+    if (!playlist) res.status(400).send({ message: 'Playlist not found!' });
+    else {
+      playlist.name = req.body.playlist.name;
+      playlist.description = req.body.playlist.description;
+      playlist.tracks = req.body.playlist.tracks;
+      playlist.url = req.body.playlist.url;
+      playlist.public = req.body.playlist.public;
+      playlist.collaborative = req.body.playlist.collaborative;
+
+      playlist
+        .save()
+        .then((playlist) => {
+          res.status(200).json({ message: 'Playlist updated!', playlist });
+        })
+        .catch((err) => {
+          res.status(400).send({ message: 'Playlist update failed' });
+        });
+    }
   });
 }
 

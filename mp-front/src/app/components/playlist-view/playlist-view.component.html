@@ -52,8 +52,19 @@
         <button class="primary" (click)="updatePlaylist()" *ngIf="playlistId">
           Update playlist
         </button>
-        <button class="primary" (click)="exportPlaylist()" *ngIf="playlistId">
+        <button
+          class="primary"
+          (click)="exportPlaylist()"
+          *ngIf="playlistId && !playlistUrl"
+        >
           Export to Spotify
+        </button>
+        <button
+          class="primary"
+          (click)="openInSpotify()"
+          *ngIf="playlistId && playlistUrl"
+        >
+          Open in Spotify
         </button>
       </div>
     </div>

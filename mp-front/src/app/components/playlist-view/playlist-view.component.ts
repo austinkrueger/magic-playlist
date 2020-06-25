@@ -17,6 +17,7 @@ export class PlaylistViewComponent implements OnInit {
   editingTitle = false;
   editingDesc = false;
   playlistId;
+  playlistUrl;
 
   @ViewChild('title') title: ElementRef<any>;
   @ViewChild('desc') desc: ElementRef<any>;
@@ -39,7 +40,8 @@ export class PlaylistViewComponent implements OnInit {
             this.playlist = response.tracks;
             this.playlistTitle = response.name;
             this.playlistDesc = response.description;
-            this.playlistId = response._id;
+            this.playlistId = this.ar.snapshot.paramMap.get('id');
+            this.playlistUrl = response.url;
           },
           (error: any) => {
             this.toast.error(error);
@@ -94,9 +96,35 @@ export class PlaylistViewComponent implements OnInit {
     );
   }
 
-  updatePlaylist(): void {}
+  updatePlaylist(): void {
+    console.log(this.playlist);
+    const updatePlaylist: any = {
+      tracks: this.playlist,
+      name: this.playlistTitle,
+      description: this.playlistDesc,
+      collaborative: false,
+      public: true,
+      id: this.playlistId,
+      spotify_uid: sessionStorage.getItem('spotifyUserId'),
+    };
+    this.playlistService.updatePlaylist(updatePlaylist).subscribe(
+      (response: any) => {
+        if (response['playlist']) {
+          this.toast.success(response['message']);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        this.toast.error(error);
+      }
+    );
+  }
 
   exportPlaylist(): void {}
+
+  openInSpotify(): void {
+    window.location.href = this.playlistUrl;
+  }
 
   editTitle(): void {
     this.editingTitle = true;

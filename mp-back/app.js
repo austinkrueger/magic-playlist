@@ -25,6 +25,7 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
 }
 
 const RSA_PUBLIC_KEY = fs.readFileSync('./config/jwtRS256.key.pub');
+// const RSA_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY.replace(/\\n/g, '\n');
 const checkIfAuthenticated = expressJwt({
   secret: RSA_PUBLIC_KEY,
 });
