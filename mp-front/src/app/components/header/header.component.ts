@@ -27,10 +27,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    sessionStorage.removeItem('spotifyUserInfo');
-    sessionStorage.removeItem('spotifyUserId');
-    localStorage.removeItem('spotifyAccessToken');
-    localStorage.removeItem('spotifyRefreshToken');
     this.router.navigate(['/logout']);
   }
 }

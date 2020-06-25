@@ -54,11 +54,13 @@ export class SpotifyService {
     );
   }
 
-  invalidateToken() {
+  invalidateTokens() {
     sessionStorage.removeItem('spotifyUserInfo');
     sessionStorage.removeItem('spotifyUserId');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('spotifyAccessToken');
+    localStorage.removeItem('spotifyRefreshToken');
   }
 
   public isLoggedIn() {

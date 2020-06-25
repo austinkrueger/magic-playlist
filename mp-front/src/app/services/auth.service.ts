@@ -38,5 +38,7 @@ export class AuthService {
 
   refreshToken() {}
 
-  logout() {}
+  logout() {
+    this.spotifyService.invalidateTokens();
+  }
 }
