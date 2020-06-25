@@ -1,5 +1,5 @@
 <div class="playlist-content">
-  <div class="playlist-wrapper">
+  <div class="playlist-wrapper" *ngIf="playlist">
     <div class="playlist-header">
       <div class="img-wrapper">
         <ng-container *ngFor="let track of playlist; let i = index">
