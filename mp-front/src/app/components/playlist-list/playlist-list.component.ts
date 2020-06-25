@@ -16,7 +16,6 @@ export class PlaylistListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.playlists = PLAYLISTS;
     // make call to playlist service to get playlists
     this.playlistService
       .getPlaylistsByUser(sessionStorage.getItem('spotifyUserId'))
@@ -31,7 +30,12 @@ export class PlaylistListComponent implements OnInit {
       );
   }
 
-  createNew() {
+  createNew(): void {
     this.router.navigate(['/me/playlists/add']);
+  }
+
+  viewPlaylist(playlist: any): void {
+    sessionStorage.removeItem('userGeneratedTempPlaylist');
+    this.router.navigate(['/me/playlists', playlist._id]);
   }
 }

@@ -43,11 +43,17 @@
       </div>
 
       <div class="playlist-actions">
-        <button class="primary" (click)="savePlaylist()">
+        <button class="primary" (click)="savePlaylist()" *ngIf="!playlistId">
           Save this playlist
         </button>
-        <button class="primary" (click)="createNew()">
+        <button class="primary" (click)="createNew()" *ngIf="!playlistId">
           Create new playlist
+        </button>
+        <button class="primary" (click)="updatePlaylist()" *ngIf="playlistId">
+          Update playlist
+        </button>
+        <button class="primary" (click)="exportPlaylist()" *ngIf="playlistId">
+          Export to Spotify
         </button>
       </div>
     </div>

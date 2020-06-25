@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { ToastrService } from 'ngx-toastr';
@@ -16,24 +16,41 @@ export class PlaylistViewComponent implements OnInit {
   playlistDesc = 'Enter a description for your playlist!';
   editingTitle = false;
   editingDesc = false;
+  playlistId;
 
   @ViewChild('title') title: ElementRef<any>;
   @ViewChild('desc') desc: ElementRef<any>;
   constructor(
     private router: Router,
     private playlistService: PlaylistService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private ar: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      JSON.parse(sessionStorage.getItem('userGeneratedTempPlaylist'))
-    );
-    this.playlist = JSON.parse(
-      sessionStorage.getItem('userGeneratedTempPlaylist')
-    );
-    if (!this.playlist) {
-      this.router.navigate(['/me/playlists']);
+    console.log('playlistid', this.ar.snapshot.paramMap.get('id'));
+    const tempPlaylist = sessionStorage.getItem('userGeneratedTempPlaylist');
+    if (!tempPlaylist) {
+      this.playlistService
+        .getPlaylist(this.ar.snapshot.paramMap.get('id'))
+        .subscribe(
+          (response: any) => {
+            console.log('okay response', response);
+            this.playlist = response.tracks;
+            this.playlistTitle = response.name;
+            this.playlistDesc = response.description;
+            this.playlistId = response._id;
+          },
+          (error: any) => {
+            this.toast.error(error);
+            this.router.navigate(['/me/playlists']);
+          }
+        );
+    } else {
+      this.playlist = JSON.parse(tempPlaylist);
+      if (!this.playlist) {
+        this.router.navigate(['/me/playlists']);
+      }
     }
   }
 
@@ -76,6 +93,10 @@ export class PlaylistViewComponent implements OnInit {
       }
     );
   }
+
+  updatePlaylist(): void {}
+
+  exportPlaylist(): void {}
 
   editTitle(): void {
     this.editingTitle = true;

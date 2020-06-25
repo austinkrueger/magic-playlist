@@ -40,8 +40,8 @@ function postPlaylist(req, res) {
 */
 function getPlaylist(req, res) {
   Playlist.findById(req.params.id, (err, playlist) => {
-    if (err) res.send(err);
-    else res.json(playlist);
+    if (err) res.status(400).send(err);
+    else res.status(200).json(playlist);
   });
 }
 
