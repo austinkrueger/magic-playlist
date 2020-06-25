@@ -47,5 +47,4 @@ Thumbs.db
 
 .env
 
-/config/jwtRS256.key
-/config/jwtRS256.key.pub
+*RS256.key*
