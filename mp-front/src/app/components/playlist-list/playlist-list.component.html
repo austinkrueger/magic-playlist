@@ -1,4 +1,4 @@
-<div class="playlist-list-wrapper">
+<div class="playlist-list-wrapper animate fadeInBottom">
   <ng-container *ngIf="playlists.length > 0">
     <ng-container *ngFor="let playlist of playlists">
       <div class="playlist-item" (click)="viewPlaylist(playlist)">
@@ -20,12 +20,6 @@
             target="_blank"
             (click)="$event.stopPropagation()"
             >Open in Spotify</a
-          >
-          <a
-            class="action-link"
-            href="javascript:void(0);"
-            (click)="exportPlaylist(playlist); $event.stopPropagation()"
-            ><span *ngIf="playlist['url']">Re-</span>Export to Spotify</a
           >
         </div>
       </div>

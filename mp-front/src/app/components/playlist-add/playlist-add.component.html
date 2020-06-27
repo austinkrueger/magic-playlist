@@ -1,4 +1,4 @@
-<div class="search-wrapper">
+<div class="search-wrapper animate fadeInBottom">
   <h1 class="search-heading">Create a new playlist</h1>
   <input
     class="search-input"
@@ -13,7 +13,7 @@
 </div>
 <div class="search-results" *ngIf="searchResults.length > 0 || !showLoader">
   <ng-container *ngFor="let item of searchResults; let i = index">
-    <div class="result" (click)="createPlaylist(item)">
+    <div class="result animate fadeInBottom" (click)="createPlaylist(item)">
       <img
         *ngIf="item['images'] && item['images'].length > 0"
         [src]="item['images'][0]['url']"
@@ -30,7 +30,7 @@
     </div>
   </ng-container>
 </div>
-<div class="loader-wrapper" *ngIf="showLoader">
+<div class="loader-wrapper animate fadeInBottom" *ngIf="showLoader">
   <div class="loader">Loading...</div>
   <h2 class="loading-tagline">Generating your playlist...</h2>
 </div>
