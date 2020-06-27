@@ -43,7 +43,24 @@ export class AuthService {
       );
   }
 
-  refreshToken() {}
+  isTokenExpired() {
+    const now = Date.now();
+    const jwt_expires_at = parseInt(localStorage.getItem('expires_at'), 2);
+    if (now > jwt_expires_at) {
+      return false;
+    }
+
+    const spotify_expires_at = parseInt(
+      sessionStorage.getItem('spotifyTokenExpires'),
+      2
+    );
+
+    if (now > spotify_expires_at) {
+      return false;
+    }
+
+    return true;
+  }
 
   logout() {
     this.spotifyService.invalidateTokens();

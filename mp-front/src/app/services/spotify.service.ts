@@ -44,8 +44,16 @@ export class SpotifyService {
         const expiresAt = moment().add(res.expiresIn, 'second');
         sessionStorage.setItem('spotifyUserInfo', JSON.stringify(res.data));
         sessionStorage.setItem('spotifyUserId', res.data.id);
+        const now = Date.now();
+        sessionStorage.setItem(
+          'spotifyTokenExpires',
+          JSON.stringify(now + res.data.expires_in / 1000)
+        );
         localStorage.setItem('id_token', res.idToken);
-        localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+        localStorage.setItem(
+          'expires_at',
+          JSON.stringify(now + expiresAt.valueOf() / 1000)
+        );
         if (viewPlaylist) {
           this.router.navigate([
             '/me/playlists',

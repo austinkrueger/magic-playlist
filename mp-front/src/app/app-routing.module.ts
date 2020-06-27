@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       import('./components/dashboard/dashboard.module').then(
         (m) => m.DashboardModule
       ),
+    canActivate: [AuthGuard],
   },
   { path: 'magic-playlist/:id', component: PlaylistComponent },
   { path: 'auth/spotify_login', component: AuthComponent },
