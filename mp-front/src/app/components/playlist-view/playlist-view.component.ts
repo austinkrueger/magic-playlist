@@ -144,15 +144,15 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
     this.subscriptions.push(updateSub);
   }
 
-  exportPlaylist(playlist: any): void {
+  exportPlaylist(): void {
     const exportSub: Subscription = this.spotifyService
-      .exportPlaylist(playlist)
+      .exportPlaylist(this.playlist)
       .subscribe(
         (response: any) => {
-          playlist.url = response.externalUrl;
+          this.playlist.url = response.externalUrl;
           this.toast.success('Playlist Successfully Exported!');
           const updateSub = this.playlistService
-            .updatePlaylist(playlist)
+            .updatePlaylist(this.playlist)
             .subscribe(
               (updateRes: any) => {
                 // silently succeed updating the playlist url
@@ -169,6 +169,10 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       );
 
     this.subscriptions.push(exportSub);
+  }
+
+  deletePlaylist(): void {
+    console.log(this.playlist);
   }
 
   openInSpotify(): void {

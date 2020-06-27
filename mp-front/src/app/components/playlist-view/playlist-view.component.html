@@ -1,4 +1,16 @@
-<div class="playlist-content">
+<div class="playlist-content animate fadeInBottom">
+  <div class="playlist-action-row" *ngIf="playlistId">
+    <div class="tab re-export-tab" *ngIf="playlistUrl">
+      <a href="javascript:void(0);" (click)="exportPlaylist()" class="tab-link"
+        >Re-export playlist</a
+      >
+    </div>
+    <div class="tab delete-tab">
+      <a href="javascript:void(0);" (click)="deletePlaylist()" class="tab-link"
+        >Delete playlist</a
+      >
+    </div>
+  </div>
   <div class="playlist-wrapper" *ngIf="playlist">
     <div class="playlist-header">
       <div class="img-wrapper">
