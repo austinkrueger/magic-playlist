@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './playlist-add.component.html',
   styleUrls: ['./playlist-add.component.scss'],
 })
-export class PlaylistAddComponent implements OnInit {
+export class PlaylistAddComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   searchTerm = '';
   searchResults: any[] = [];
@@ -64,7 +64,7 @@ export class PlaylistAddComponent implements OnInit {
   }
 
   getPlaylistTracks(artistList, index) {
-    this.spotifyService
+    const trackSub: Subscription = this.spotifyService
       .generatePlaylistTracks(this.mainArtistId, artistList[index])
       .pipe(
         finalize(() => {
@@ -94,5 +94,7 @@ export class PlaylistAddComponent implements OnInit {
           console.log(error);
         }
       );
+
+    this.subscriptions.push(trackSub);
   }
 }

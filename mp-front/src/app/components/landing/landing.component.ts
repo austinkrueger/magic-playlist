@@ -65,7 +65,7 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   getPlaylistTracks(artistList, index) {
-    this.spotifyService
+    const trackSub: Subscription = this.spotifyService
       .generatePlaylistTracks(this.mainArtistId, artistList[index])
       .pipe(
         finalize(() => {
@@ -96,5 +96,6 @@ export class LandingComponent implements OnInit, OnDestroy {
           console.log(error);
         }
       );
+    this.subscriptions.push(trackSub);
   }
 }

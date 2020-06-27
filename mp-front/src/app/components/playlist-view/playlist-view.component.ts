@@ -1,8 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { SpotifyService } from 'src/app/services/spotify.service';
 
 // authenticated playlist component
 @Component({
@@ -10,7 +18,8 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './playlist-view.component.html',
   styleUrls: ['./playlist-view.component.scss'],
 })
-export class PlaylistViewComponent implements OnInit {
+export class PlaylistViewComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
   playlist: any;
   playlistTitle = 'New Playlist';
   playlistDesc = 'Enter a description for your playlist!';
@@ -24,15 +33,20 @@ export class PlaylistViewComponent implements OnInit {
   constructor(
     private router: Router,
     private playlistService: PlaylistService,
+    private spotifyService: SpotifyService,
     private toast: ToastrService,
     private ar: ActivatedRoute
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 
   ngOnInit(): void {
     console.log('playlistid', this.ar.snapshot.paramMap.get('id'));
     const tempPlaylist = sessionStorage.getItem('userGeneratedTempPlaylist');
     if (!tempPlaylist) {
-      this.playlistService
+      const getSub: Subscription = this.playlistService
         .getPlaylist(this.ar.snapshot.paramMap.get('id'))
         .subscribe(
           (response: any) => {
@@ -48,6 +62,8 @@ export class PlaylistViewComponent implements OnInit {
             this.router.navigate(['/me/playlists']);
           }
         );
+
+      this.subscriptions.push(getSub);
     } else {
       this.playlist = JSON.parse(tempPlaylist);
       if (!this.playlist) {
@@ -82,18 +98,22 @@ export class PlaylistViewComponent implements OnInit {
       public: true,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
     };
-    this.playlistService.addPlaylist(newPlaylist).subscribe(
-      (response: any) => {
-        if (response['playlist']) {
-          this.toast.success(response['playlist']);
-          this.router.navigate(['/me/playlists']);
+    const addSub: Subscription = this.playlistService
+      .addPlaylist(newPlaylist)
+      .subscribe(
+        (response: any) => {
+          if (response['playlist']) {
+            this.toast.success(response['playlist']);
+            this.router.navigate(['/me/playlists']);
+          }
+        },
+        (error: any) => {
+          console.log(error);
+          this.toast.error(error);
         }
-      },
-      (error: any) => {
-        console.log(error);
-        this.toast.error(error);
-      }
-    );
+      );
+
+    this.subscriptions.push(addSub);
   }
 
   updatePlaylist(): void {
@@ -107,20 +127,49 @@ export class PlaylistViewComponent implements OnInit {
       id: this.playlistId,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
     };
-    this.playlistService.updatePlaylist(updatePlaylist).subscribe(
-      (response: any) => {
-        if (response['playlist']) {
-          this.toast.success(response['message']);
+    const updateSub: Subscription = this.playlistService
+      .updatePlaylist(updatePlaylist)
+      .subscribe(
+        (response: any) => {
+          if (response['playlist']) {
+            this.toast.success(response['message']);
+          }
+        },
+        (error: any) => {
+          console.log(error);
+          this.toast.error(error);
         }
-      },
-      (error: any) => {
-        console.log(error);
-        this.toast.error(error);
-      }
-    );
+      );
+
+    this.subscriptions.push(updateSub);
   }
 
-  exportPlaylist(): void {}
+  exportPlaylist(playlist: any): void {
+    const exportSub: Subscription = this.spotifyService
+      .exportPlaylist(playlist)
+      .subscribe(
+        (response: any) => {
+          playlist.url = response.externalUrl;
+          this.toast.success('Playlist Successfully Exported!');
+          const updateSub = this.playlistService
+            .updatePlaylist(playlist)
+            .subscribe(
+              (updateRes: any) => {
+                // silently succeed updating the playlist url
+              },
+              (updateErr: any) => {
+                this.toast.error(updateErr);
+              }
+            );
+          this.subscriptions.push(updateSub);
+        },
+        (error: any) => {
+          this.toast.error(error);
+        }
+      );
+
+    this.subscriptions.push(exportSub);
+  }
 
   openInSpotify(): void {
     window.location.href = this.playlistUrl;
