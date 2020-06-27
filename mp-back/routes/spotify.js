@@ -1,7 +1,6 @@
 let SpotifyWebApi = require('spotify-web-api-node');
 let axios = require('axios');
 require('dotenv').config();
-let spotifyService = require('../services/spotify');
 let jwt = require('jsonwebtoken');
 let fs = require('fs');
 
@@ -123,7 +122,7 @@ function searchArtist() {}
 
 // post to api
 function searchArtists(req, res) {
-  spotifyService.authClient().then((response) => {
+  authClient().then((response) => {
     let client_token = response.data.access_token;
     spotifyApi.setAccessToken(client_token);
     spotifyApi.searchArtists(req.body.search_term).then(
@@ -139,7 +138,7 @@ function searchArtists(req, res) {
 
 // post to api, create temporary playlist from data
 function generateTemporaryPlaylistArtistList(req, res) {
-  spotifyService.authClient().then((response) => {
+  authClient().then((response) => {
     let client_token = response.data.access_token;
     spotifyApi.setAccessToken(client_token);
     spotifyApi.getArtistRelatedArtists(req.body.artist_id).then(
@@ -152,16 +151,14 @@ function generateTemporaryPlaylistArtistList(req, res) {
               i++;
             } else {
               artistList.push(related[i]['id']);
-              spotifyService
-                .getSubRelatedArtists(spotifyApi, related[i]['id'])
-                .then(
-                  (sub_data) => {
-                    artistList.push(sub_data.body.artists[0]);
-                  },
-                  (sub_error) => {
-                    console.log('sub error', sub_error);
-                  }
-                );
+              getSubRelatedArtists(spotifyApi, related[i]['id']).then(
+                (sub_data) => {
+                  artistList.push(sub_data.body.artists[0]);
+                },
+                (sub_error) => {
+                  console.log('sub error', sub_error);
+                }
+              );
             }
           } else {
             res.status(200).json({ artists: artistList });
@@ -177,13 +174,13 @@ function generateTemporaryPlaylistArtistList(req, res) {
 }
 
 function generateArtistTopTracks(req, res) {
-  spotifyService.authClient().then((response) => {
+  authClient().then((response) => {
     let client_token = response.data.access_token;
     spotifyApi.setAccessToken(client_token);
     const mainArtistId = req.body.main_artist_id;
     const artistId = req.body.artist_id;
     let trackList = [];
-    spotifyService.getTopTracks(spotifyApi, artistId).then(
+    getTopTracks(spotifyApi, artistId).then(
       (data) => {
         // console.log('TRACKLIST LENGTH ---------', trackList.length);
         if (artistId === mainArtistId) {
@@ -202,11 +199,29 @@ function generateArtistTopTracks(req, res) {
   });
 }
 
-// post to api
-function getArtistRelatedArtists() {}
+function authClient() {
+  const config = {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization:
+        'Basic ' +
+        Buffer.from(clientId + ':' + clientSecret).toString('base64'),
+    },
+  };
+  return axios.post(
+    'https://accounts.spotify.com/api/token',
+    `grant_type=client_credentials`,
+    config
+  );
+}
 
-// post to api
-function getArtistTopSongs() {}
+function getSubRelatedArtists(api, artist_id) {
+  return api.getArtistRelatedArtists(artist_id);
+}
+
+function getTopTracks(api, artist_id) {
+  return api.getArtistTopTracks(artist_id, 'US');
+}
 
 module.exports = {
   requestToken,
