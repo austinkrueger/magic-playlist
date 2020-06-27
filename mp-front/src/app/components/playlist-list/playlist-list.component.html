@@ -16,16 +16,16 @@
           <a
             *ngIf="playlist['url']"
             class="action-link"
-            href="javascript:void(0);"
+            [href]="playlist['url']"
+            target="_blank"
             (click)="$event.stopPropagation()"
             >Open in Spotify</a
           >
           <a
-            *ngIf="!playlist['url']"
             class="action-link"
             href="javascript:void(0);"
-            (click)="$event.stopPropagation()"
-            >Export to Spotify</a
+            (click)="exportPlaylist(playlist); $event.stopPropagation()"
+            ><span *ngIf="playlist['url']">Re-</span>Export to Spotify</a
           >
         </div>
       </div>

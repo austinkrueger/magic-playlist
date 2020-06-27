@@ -60,6 +60,10 @@ app
   .route('/api/spotify/playlist/generate/tracks')
   .post(spotify.generateArtistTopTracks);
 
+app
+  .route('/api/spotify/playlist/export')
+  .post(checkIfAuthenticated, spotify.createPlaylist);
+
 app.listen(4000, () => console.log(`Express server running on port 4000`));
 
 module.exports = app; // for testing

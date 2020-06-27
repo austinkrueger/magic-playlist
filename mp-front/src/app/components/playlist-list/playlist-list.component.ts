@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PlaylistService } from 'src/app/services/playlist.service';
 import { Router } from '@angular/router';
+import { SpotifyService } from 'src/app/services/spotify.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-playlist-list',
@@ -12,7 +14,9 @@ export class PlaylistListComponent implements OnInit {
 
   constructor(
     private playlistService: PlaylistService,
-    private router: Router
+    private spotifyService: SpotifyService,
+    private router: Router,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -21,11 +25,10 @@ export class PlaylistListComponent implements OnInit {
       .getPlaylistsByUser(sessionStorage.getItem('spotifyUserId'))
       .subscribe(
         (response: any) => {
-          console.log(response);
           this.playlists = response;
         },
         (error: any) => {
-          console.log(error);
+          this.toast.error(error);
         }
       );
   }
@@ -37,5 +40,25 @@ export class PlaylistListComponent implements OnInit {
   viewPlaylist(playlist: any): void {
     sessionStorage.removeItem('userGeneratedTempPlaylist');
     this.router.navigate(['/me/playlists', playlist._id]);
+  }
+
+  exportPlaylist(playlist: any): void {
+    this.spotifyService.exportPlaylist(playlist).subscribe(
+      (response: any) => {
+        playlist.url = response.externalUrl;
+        this.toast.success('Playlist Successfully Exported!');
+        this.playlistService.updatePlaylist(playlist).subscribe(
+          (updateRes: any) => {
+            // silently succeed updating the playlist url
+          },
+          (updateErr: any) => {
+            this.toast.error(updateErr);
+          }
+        );
+      },
+      (error: any) => {
+        this.toast.error(error);
+      }
+    );
   }
 }

@@ -27,7 +27,7 @@ export class PlaylistService {
   }
 
   updatePlaylist(playlist: any): Observable<any> {
-    return this.http.put(`${this.uri}/playlist/${playlist.id}`, {
+    return this.http.put(`${this.uri}/playlist/${playlist._id}`, {
       playlist: playlist,
     });
   }

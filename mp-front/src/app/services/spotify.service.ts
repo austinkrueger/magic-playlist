@@ -61,6 +61,13 @@ export class SpotifyService {
     );
   }
 
+  exportPlaylist(playlist: any): Observable<any> {
+    return this.http.post(`${this.uri}/api/spotify/playlist/export`, {
+      playlist,
+      token: localStorage.getItem('spotifyAccessToken'),
+    });
+  }
+
   invalidateTokens() {
     sessionStorage.removeItem('spotifyUserInfo');
     sessionStorage.removeItem('spotifyUserId');

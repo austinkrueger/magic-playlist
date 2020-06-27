@@ -64,7 +64,59 @@ function getMe(req, res) {
 }
 
 // post to api
-function createPlaylist() {}
+function createPlaylist(req, res) {
+  spotifyApi.setAccessToken(req.body.token);
+  const trackUriList = generateTrackUriList(req.body.playlist.tracks);
+  const info = spotifyApi
+    .createPlaylist(req.body.playlist.spotify_uid, req.body.playlist.name, {
+      description: req.body.playlist.description,
+      public: true,
+    })
+    .then(
+      function (data) {
+        const playlistId = data.body.id;
+        const externalUrl = data.body.external_urls['spotify'];
+        return { playlistId, externalUrl };
+      },
+      function (error) {
+        res.status(400).send(error);
+        return error;
+      }
+    );
+
+  // Add tracks to a playlist
+  info.then(
+    function (parent_data) {
+      spotifyApi.addTracksToPlaylist(parent_data.playlistId, trackUriList).then(
+        function (data) {
+          const responseData = {
+            playlistId: parent_data.playlistId,
+            externalUrl: parent_data.externalUrl,
+            origRespons: data.body,
+          };
+          res.status(200).json(responseData);
+        },
+        function (error) {
+          console.log('Something went wrong!', error);
+          res.status(400).send(error);
+        }
+      );
+    },
+    function (parent_error) {
+      console.log('something else went wrong', parent_error);
+      res.status(400).send(error);
+    }
+  );
+}
+
+function generateTrackUriList(tracks) {
+  const trackUriList = [];
+  tracks.forEach((track) => {
+    trackUriList.push(track.uri);
+  });
+
+  return trackUriList;
+}
 
 // post to api
 function searchArtist() {}
@@ -162,4 +214,5 @@ module.exports = {
   searchArtists,
   generateTemporaryPlaylistArtistList,
   generateArtistTopTracks,
+  createPlaylist,
 };
