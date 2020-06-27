@@ -9,10 +9,10 @@ function getPlaylists(req, res) {
   query.exec((err, playlists) => {
     if (err) {
       // console.log(err);
-      res.send(err);
+      res.status(400).send(err);
     } else {
       // console.log(playlists);
-      res.json(playlists);
+      res.status(200).json(playlists);
     }
   });
 }

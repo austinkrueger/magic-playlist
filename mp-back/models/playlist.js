@@ -29,6 +29,9 @@ let Playlist = new Schema({
     type: String,
     required: true,
   },
+  spotify_playlist_id: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('Playlist', Playlist);
