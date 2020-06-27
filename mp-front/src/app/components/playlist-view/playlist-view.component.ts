@@ -51,11 +51,17 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
         .subscribe(
           (response: any) => {
             console.log('okay response', response);
-            this.playlist = response.tracks;
-            this.playlistTitle = response.name;
-            this.playlistDesc = response.description;
-            this.playlistId = this.ar.snapshot.paramMap.get('id');
-            this.playlistUrl = response.url;
+            if (response) {
+              this.playlist = response.tracks;
+              this.playlistTitle = response.name;
+              this.playlistDesc = response.description;
+              this.playlistId = this.ar.snapshot.paramMap.get('id');
+              this.playlistUrl = response.url;
+            } else {
+              console.log('playlist not found');
+              this.toast.error('Playlist not found');
+              this.router.navigate(['/me/playlists']);
+            }
           },
           (error: any) => {
             this.toast.error(error);
@@ -124,7 +130,7 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       description: this.playlistDesc,
       collaborative: false,
       public: true,
-      id: this.playlistId,
+      _id: this.playlistId,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
     };
     const updateSub: Subscription = this.playlistService
@@ -145,14 +151,25 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   }
 
   exportPlaylist(): void {
+    const postdata: any = {
+      _id: this.playlistId,
+      description: this.playlistDesc,
+      name: this.playlistTitle,
+      tracks: this.playlist,
+      spotify_uid: sessionStorage.getItem('spotifyUserId'),
+      collaborative: false,
+      public: true,
+    };
     const exportSub: Subscription = this.spotifyService
-      .exportPlaylist(this.playlist)
+      .exportPlaylist(postdata)
       .subscribe(
         (response: any) => {
-          this.playlist.url = response.externalUrl;
+          this.playlistUrl = response.externalUrl;
+          postdata['url'] = response.externalUrl;
+          // this.playlist.spotify_playlist_id = response.playlistId;
           this.toast.success('Playlist Successfully Exported!');
           const updateSub = this.playlistService
-            .updatePlaylist(this.playlist)
+            .updatePlaylist(postdata)
             .subscribe(
               (updateRes: any) => {
                 // silently succeed updating the playlist url
@@ -172,11 +189,20 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   }
 
   deletePlaylist(): void {
-    console.log(this.playlist);
+    this.playlistService.deletePlaylist(this.playlistId).subscribe(
+      (response: any) => {
+        this.toast.success(response['message']);
+        this.router.navigate(['/me/playlists']);
+      },
+      (error: any) => {
+        // console.log(error);
+        this.toast.error(error);
+      }
+    );
   }
 
   openInSpotify(): void {
-    window.location.href = this.playlistUrl;
+    window.open(this.playlistUrl, '_blank');
   }
 
   editTitle(): void {

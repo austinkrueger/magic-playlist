@@ -61,10 +61,13 @@ function deletePlaylist(req, res) {
 */
 function updatePlaylist(req, res) {
   Playlist.findById({ _id: req.params.id }, (err, playlist) => {
-    if (err) res.status(400).send(err);
+    if (err) {
+      res.status(400).send(err);
+    }
 
-    if (!playlist) res.status(400).send({ message: 'Playlist not found!' });
-    else {
+    if (!playlist) {
+      res.status(400).send({ message: 'Playlist not found!' });
+    } else {
       playlist.name = req.body.playlist.name;
       playlist.description = req.body.playlist.description;
       playlist.tracks = req.body.playlist.tracks;
