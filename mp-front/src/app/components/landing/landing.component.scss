@@ -90,3 +90,25 @@
     }
   }
 }
+
+@media (max-width: 1200px) {
+  .hero {
+    .hero-input {
+      width: 80vw;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .hero {
+    height: 40vh;
+    .hero-heading {
+      font-size: 3.5rem;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+    }
+  }
+}
+@media (max-width: 480px) {
+}
