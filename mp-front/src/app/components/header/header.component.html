@@ -3,20 +3,50 @@
     Magic playlist
   </h1>
   <div class="header-nav">
-    <a class="nav-link" routerLink="/me/playlists/add">New Playlist</a>
-    <a class="nav-link" routerLink="/me/playlists">My Playlists</a>
-    <div class="avi-wrapper" *ngIf="userInfo">
+    <a class="nav-link" *ngIf="largeView" routerLink="/me/playlists/add"
+      >New Playlist</a
+    >
+    <a class="nav-link" *ngIf="largeView" routerLink="/me/playlists"
+      >My Playlists</a
+    >
+    <div class="avi-wrapper" *ngIf="userInfo && largeView">
       <img
         *ngIf="userInfo['images'] && userInfo['images'].length > 0"
         [src]="userInfo['images'][0]['url']"
       />
       <span
+        class="img-placeholder"
         *ngIf="
           !userInfo['images'] ||
           (userInfo['images'] && userInfo['images'].length === 0)
         "
-      ></span>
+        >{{ userInfo.display_name[0] }}</span
+      >
     </div>
+
+    <ngx-menu #menu>
+      <a routerLink="/me/playlists/add">New Playlist</a>
+      <a routerLink="/me/playlists">My Playlists</a>
+    </ngx-menu>
+    <div
+      class="avi-wrapper"
+      *ngIf="userInfo && !largeView"
+      (click)="menu.toggle($event)"
+    >
+      <img
+        *ngIf="userInfo['images'] && userInfo['images'].length > 0"
+        [src]="userInfo['images'][0]['url']"
+      />
+      <span
+        class="img-placeholder"
+        *ngIf="
+          !userInfo['images'] ||
+          (userInfo['images'] && userInfo['images'].length === 0)
+        "
+        >{{ userInfo.display_name[0] }}</span
+      >
+    </div>
+
     <a class="nav-link" href="javascript:void(0);" (click)="logout()">Logout</a>
   </div>
 </div>

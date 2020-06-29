@@ -17,6 +17,8 @@ import { FourOhFourComponent } from './components/four-oh-four/four-oh-four.comp
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxMenusModule } from '@ngx-lite/menus';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { ToastrModule } from 'ngx-toastr';
     PipesModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    NgxMenusModule,
+    LayoutModule,
   ],
   providers: [
     HttpClientModule,
