@@ -39,7 +39,11 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     PipesModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     NgxMenusModule,
     LayoutModule,
   ],

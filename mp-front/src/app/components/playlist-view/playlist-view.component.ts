@@ -66,7 +66,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
         .getPlaylist(this.ar.snapshot.paramMap.get('id'))
         .subscribe(
           (response: any) => {
-            console.log('okay response', response);
             if (response) {
               this.playlist = response.tracks;
               this.playlistTitle = response.name;
@@ -74,13 +73,15 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
               this.playlistId = this.ar.snapshot.paramMap.get('id');
               this.playlistUrl = response.url;
             } else {
-              console.log('playlist not found');
-              this.toast.error('Playlist not found');
+              this.toast.error(
+                'Playlist not found',
+                'Oops! Something went wrong.'
+              );
               this.router.navigate(['/me/playlists']);
             }
           },
           (error: any) => {
-            this.toast.error(error);
+            this.toast.error(error, 'Oops! Something went wrong.');
             this.router.navigate(['/me/playlists']);
           }
         );
@@ -111,7 +112,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   }
 
   savePlaylist(): void {
-    console.log(this.playlist);
     const newPlaylist: any = {
       tracks: this.playlist,
       name: this.playlistTitle,
@@ -125,13 +125,13 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           if (response['playlist']) {
-            this.toast.success(response['playlist']);
+            this.toast.success(response['playlist'], 'Success!');
             this.router.navigate(['/me/playlists']);
           }
         },
         (error: any) => {
-          console.log(error);
-          this.toast.error(error);
+          // console.log(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
 
@@ -154,12 +154,12 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       .subscribe(
         (response: any) => {
           if (response['playlist']) {
-            this.toast.success(response['message']);
+            this.toast.success(response['message'], 'Success!');
           }
         },
         (error: any) => {
-          console.log(error);
-          this.toast.error(error);
+          // console.log(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
 
@@ -183,7 +183,7 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
           this.playlistUrl = response.externalUrl;
           postdata['url'] = response.externalUrl;
           // this.playlist.spotify_playlist_id = response.playlistId;
-          this.toast.success('Playlist Successfully Exported!');
+          this.toast.success('Playlist Successfully Exported!', 'Success!');
           const updateSub = this.playlistService
             .updatePlaylist(postdata)
             .subscribe(
@@ -191,13 +191,13 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
                 // silently succeed updating the playlist url
               },
               (updateErr: any) => {
-                this.toast.error(updateErr);
+                this.toast.error(updateErr, 'Oops! Something went wrong.');
               }
             );
           this.subscriptions.push(updateSub);
         },
         (error: any) => {
-          this.toast.error(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
 
@@ -207,19 +207,17 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   deletePlaylist(): void {
     this.playlistService.deletePlaylist(this.playlistId).subscribe(
       (response: any) => {
-        this.toast.success(response['message']);
+        this.toast.success(response['message'], 'Success!');
         this.router.navigate(['/me/playlists']);
       },
       (error: any) => {
-        // console.log(error);
-        this.toast.error(error);
+        this.toast.error(error, 'Oops! Something went wrong.');
       }
     );
   }
 
   mediaListener(event) {
     this.largeView = event.breakpoints['(min-width: 900px)'] ? true : false;
-    // this.largeView = event.breakpoints['(min-width: 769px)'] ? true : false;
     this.smallView = event.breakpoints['(max-width: 620px)'] ? true : false;
     if (this.largeView) {
       this.titleWidth = '35';

@@ -11,7 +11,7 @@ import { retry, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(private toastService: ToastrService) {}
+  constructor(private toast: ToastrService) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -27,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           // server-side error
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
         }
-        this.toastService.error(errorMessage);
+        this.toast.error(errorMessage, 'Oops! Something went wrong.');
         return throwError(errorMessage);
       })
     );

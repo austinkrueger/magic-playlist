@@ -43,7 +43,7 @@ export class PlaylistListComponent implements OnInit, OnDestroy {
           this.playlists = response;
         },
         (error: any) => {
-          this.toast.error(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
 
