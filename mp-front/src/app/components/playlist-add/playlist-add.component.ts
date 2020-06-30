@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-playlist-add',
@@ -17,7 +18,11 @@ export class PlaylistAddComponent implements OnInit, OnDestroy {
   mainArtistId = '';
   trackList: any[] = [];
 
-  constructor(private spotifyService: SpotifyService, private router: Router) {}
+  constructor(
+    private spotifyService: SpotifyService,
+    private router: Router,
+    private toast: ToastrService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -36,7 +41,7 @@ export class PlaylistAddComponent implements OnInit, OnDestroy {
               : [];
           },
           (error): any => {
-            console.log(error);
+            this.toast.error(error, 'Oops! Something went wrong.');
           }
         );
       this.subscriptions.push(searchSub);
@@ -52,12 +57,11 @@ export class PlaylistAddComponent implements OnInit, OnDestroy {
       .generatePlaylistArtists(artist.id)
       .subscribe(
         (response): any => {
-          console.log(response);
           const artists = response.artists;
           this.getPlaylistTracks(artists, 0);
         },
         (error) => {
-          console.log(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
     this.subscriptions.push(genSub);
@@ -70,9 +74,6 @@ export class PlaylistAddComponent implements OnInit, OnDestroy {
         finalize(() => {
           if (index === artistList.length - 1) {
             this.showLoader = false;
-            console.log('show me the list now that we are done');
-            console.log(this.trackList);
-            console.log('done');
             sessionStorage.setItem(
               'userGeneratedTempPlaylist',
               JSON.stringify(this.trackList)
@@ -87,11 +88,10 @@ export class PlaylistAddComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (response) => {
-          console.log(response);
           this.trackList = this.trackList.concat(response.tracks);
         },
         (error) => {
-          console.log(error);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
 

@@ -47,7 +47,6 @@ function getMe(req, res) {
         expiresIn: expiresIn,
         subject: data.body.id,
       });
-      // console.log('Some information about the authenticated user', data.body);
       const returnData = {
         data: data.body,
         idToken: jwtBearerToken,
@@ -56,7 +55,6 @@ function getMe(req, res) {
       res.status(200).json(returnData);
     },
     function (error) {
-      console.log('Something went wrong!', error);
       res.status(400).send(error);
     }
   );
@@ -96,14 +94,12 @@ function createPlaylist(req, res) {
           res.status(200).json(responseData);
         },
         function (error) {
-          console.log('Something went wrong!', error);
           res.status(400).send(error);
         }
       );
     },
     function (parent_error) {
-      console.log('something else went wrong', parent_error);
-      res.status(400).send(error);
+      res.status(400).send(parent_error);
     }
   );
 }
@@ -156,7 +152,7 @@ function generateTemporaryPlaylistArtistList(req, res) {
                   artistList.push(sub_data.body.artists[0]);
                 },
                 (sub_error) => {
-                  console.log('sub error', sub_error);
+                  // fail silently if no artists found
                 }
               );
             }
@@ -182,7 +178,6 @@ function generateArtistTopTracks(req, res) {
     let trackList = [];
     getTopTracks(spotifyApi, artistId).then(
       (data) => {
-        // console.log('TRACKLIST LENGTH ---------', trackList.length);
         if (artistId === mainArtistId) {
           trackList = trackList.concat(data.body.tracks.splice(0, 6));
           res.status(200).json({ tracks: trackList });
@@ -192,7 +187,6 @@ function generateArtistTopTracks(req, res) {
         }
       },
       (error) => {
-        console.log('tracks error', error);
         res.status(400).send(error);
       }
     );

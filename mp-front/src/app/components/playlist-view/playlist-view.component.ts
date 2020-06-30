@@ -130,7 +130,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
           }
         },
         (error: any) => {
-          // console.log(error);
           this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
@@ -139,7 +138,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   }
 
   updatePlaylist(): void {
-    console.log(this.playlist);
     const updatePlaylist: any = {
       tracks: this.playlist,
       name: this.playlistTitle,
@@ -158,7 +156,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
           }
         },
         (error: any) => {
-          // console.log(error);
           this.toast.error(error, 'Oops! Something went wrong.');
         }
       );

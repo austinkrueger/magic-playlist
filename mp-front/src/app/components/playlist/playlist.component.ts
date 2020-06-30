@@ -21,9 +21,6 @@ export class PlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(
-      JSON.parse(sessionStorage.getItem('userGeneratedTempPlaylist'))
-    );
     this.playlist = JSON.parse(
       sessionStorage.getItem('userGeneratedTempPlaylist')
     );

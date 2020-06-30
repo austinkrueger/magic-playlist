@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { SpotifyService } from './spotify.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private toast: ToastrService
   ) {}
 
   authorizeSpotifyCode(authCode: string, redirUri: string) {
@@ -23,7 +25,6 @@ export class AuthService {
       })
       .subscribe(
         (response) => {
-          console.log(response);
           localStorage.setItem('spotifyAccessToken', response['access_token']);
           localStorage.setItem(
             'spotifyRefreshToken',
@@ -36,9 +37,8 @@ export class AuthService {
           }
         },
         (error) => {
-          console.log('something bad happened');
-          console.error(error);
           this.router.navigate(['']);
+          this.toast.error(error, 'Oops! Something went wrong.');
         }
       );
   }

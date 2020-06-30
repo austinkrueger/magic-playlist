@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
 export class SpotifyService {
   uri = 'http://localhost:4000';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toast: ToastrService
+  ) {}
 
   searchArtists(searchTerm: string): Observable<any> {
     return this.http.post(`${this.uri}/api/spotify/search`, {
@@ -40,7 +45,6 @@ export class SpotifyService {
     };
     return this.http.post(`${this.uri}/api/spotify/me`, tokenInfo).subscribe(
       (res: any) => {
-        console.log(res);
         const expiresAt = moment().add(res.expiresIn, 'second');
         sessionStorage.setItem('spotifyUserInfo', JSON.stringify(res.data));
         sessionStorage.setItem('spotifyUserId', res.data.id);
@@ -64,7 +68,7 @@ export class SpotifyService {
         }
       },
       (error: any) => {
-        console.log(error);
+        this.toast.error(error, 'Oops! Something went wrong.');
       }
     );
   }
