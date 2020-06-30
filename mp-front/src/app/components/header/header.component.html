@@ -28,23 +28,24 @@
       <a routerLink="/me/playlists/add">New Playlist</a>
       <a routerLink="/me/playlists">My Playlists</a>
     </ngx-menu>
-    <div
-      class="avi-wrapper"
-      *ngIf="userInfo && !largeView"
-      (click)="menu.toggle($event)"
-    >
-      <img
-        *ngIf="userInfo['images'] && userInfo['images'].length > 0"
-        [src]="userInfo['images'][0]['url']"
-      />
-      <span
-        class="img-placeholder"
-        *ngIf="
-          !userInfo['images'] ||
-          (userInfo['images'] && userInfo['images'].length === 0)
-        "
-        >{{ userInfo.display_name[0] }}</span
-      >
+    <div class="small-avi-wrapper" (click)="menu.toggle($event)">
+      <div class="avi-wrapper" *ngIf="userInfo && !largeView">
+        <img
+          *ngIf="userInfo['images'] && userInfo['images'].length > 0"
+          [src]="userInfo['images'][0]['url']"
+        />
+        <span
+          class="img-placeholder"
+          *ngIf="
+            !userInfo['images'] ||
+            (userInfo['images'] && userInfo['images'].length === 0)
+          "
+          >{{ userInfo.display_name[0] }}</span
+        >
+      </div>
+      <span class="dropdown-wrapper" *ngIf="!largeView">
+        <img src="../../../assets/img/Arrow-down.svg" />
+      </span>
     </div>
 
     <a class="nav-link" href="javascript:void(0);" (click)="logout()">Logout</a>

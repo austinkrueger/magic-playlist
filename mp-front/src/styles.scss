@@ -136,6 +136,14 @@ button {
   left: 1.5em;
 }
 
+.ngx-menu {
+  border: none !important;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.11),
+    0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
 @-webkit-keyframes load1 {
   0%,
   80%,
@@ -188,6 +196,7 @@ button {
     opacity: 1;
   }
 }
+
 @media (max-width: 1024px) {
 }
 @media (max-width: 786px) {

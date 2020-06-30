@@ -3,6 +3,7 @@ import { PlaylistService } from 'src/app/services/playlist.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-playlist-list',
@@ -12,11 +13,13 @@ import { Subscription } from 'rxjs';
 export class PlaylistListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   playlists: any[] = [];
+  largeView = false;
 
   constructor(
     private playlistService: PlaylistService,
     private router: Router,
-    private toast: ToastrService
+    private toast: ToastrService,
+    public breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnDestroy(): void {
@@ -24,6 +27,14 @@ export class PlaylistListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const layoutChanges = this.breakpointObserver.observe([
+      '(max-width: 768px)',
+      '(min-width: 769px)',
+    ]);
+
+    layoutChanges.subscribe((result) => {
+      this.mediaListener(result);
+    });
     // make call to playlist service to get playlists
     const listSub: Subscription = this.playlistService
       .getPlaylistsByUser(sessionStorage.getItem('spotifyUserId'))
@@ -46,5 +57,9 @@ export class PlaylistListComponent implements OnInit, OnDestroy {
   viewPlaylist(playlist: any): void {
     sessionStorage.removeItem('userGeneratedTempPlaylist');
     this.router.navigate(['/me/playlists', playlist._id]);
+  }
+
+  mediaListener(event) {
+    this.largeView = event.breakpoints['(min-width: 769px)'] ? true : false;
   }
 }

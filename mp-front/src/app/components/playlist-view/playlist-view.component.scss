@@ -21,16 +21,13 @@
   }
 }
 .playlist-content {
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-
+  margin-top: 20px;
   .playlist-wrapper {
     display: flex;
     flex-direction: column;
     background: #fff;
     color: #545454;
-    width: 60vw;
+    width: 70vw;
     margin: 0 0 20px 0;
     border-radius: 35px;
     -webkit-box-shadow: 0 14px 21px rgba(0, 0, 0, 0.2),
@@ -110,6 +107,12 @@
       button {
         margin: 20px;
       }
+
+      .more-button {
+        height: 24px;
+        width: 24px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -119,17 +122,27 @@
     margin: 10px 0;
 
     .track-header {
+      font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       padding: 0 40px;
 
-      .header-item.artist {
-        margin-left: 18%;
+      .header-item.title {
+        width: 35%;
       }
 
+      .header-item.artist,
       .header-item.album {
-        margin-left: 2%;
+        width: 22%;
+      }
+
+      .header-item.length {
+        width: 5%;
+        .header-item-img {
+          height: 16px;
+          width: 16px;
+        }
       }
     }
 
@@ -171,11 +184,23 @@
 }
 
 @media (max-width: 900px) {
+  .playlist-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .playlist-content > .playlist-wrapper {
     width: 95vw;
   }
-
   .playlist-content > .playlist-wrapper > .playlist-header {
+    .playlist-info {
+      .playlist-title {
+        font-size: 1.5rem;
+      }
+      .playlist-description {
+        font-size: 0.8rem;
+      }
+    }
     .img-wrapper {
       min-height: 150px;
       min-width: 150px;
@@ -196,16 +221,30 @@
 }
 
 @media (max-width: 768px) {
-  .playlist-content > .playlist-wrapper > .playlist-header {
-    .playlist-info {
-      .playlist-title {
-        font-size: 1.5rem;
+  .playlist-content {
+    .playlist-tracklist {
+      .track-header {
+        .header-item.title {
+          width: 50% !important;
+        }
+
+        .header-item.artist {
+          width: 40% !important;
+        }
       }
-      .playlist-description {
-        font-size: 0.8rem;
+
+      .track-item {
+        .track-title {
+          width: 50% !important;
+        }
+
+        .track-artist {
+          width: 40% !important;
+        }
       }
     }
   }
 }
+
 @media (max-width: 500px) {
 }

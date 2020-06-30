@@ -24,6 +24,10 @@
     }
   }
 
+  .small-avi-wrapper {
+    display: flex;
+  }
+
   .avi-wrapper {
     height: 40px;
     width: 40px;
@@ -47,6 +51,12 @@
       color: #545454;
       margin: 0 auto;
     }
+  }
+
+  .dropdown-wrapper img {
+    height: 16px;
+    width: 16px;
+    margin: 12px 15px 0 0;
   }
 
   button {
@@ -80,6 +90,12 @@
 @media (max-width: 768px) {
   .main-header {
     padding: 20px;
+  }
+
+  .header-nav {
+    .avi-wrapper {
+      margin: 0 10px;
+    }
   }
 }
 @media (max-width: 480px) {

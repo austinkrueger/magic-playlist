@@ -11,6 +11,7 @@ import { PlaylistService } from 'src/app/services/playlist.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { SpotifyService } from 'src/app/services/spotify.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 // authenticated playlist component
 @Component({
@@ -27,6 +28,11 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   editingDesc = false;
   playlistId;
   playlistUrl;
+  largeView = false;
+  smallView = false;
+  tabView = false;
+  titleWidth = '35';
+  defaultWidth = '20';
 
   @ViewChild('title') title: ElementRef<any>;
   @ViewChild('desc') desc: ElementRef<any>;
@@ -35,7 +41,8 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
     private playlistService: PlaylistService,
     private spotifyService: SpotifyService,
     private toast: ToastrService,
-    private ar: ActivatedRoute
+    private ar: ActivatedRoute,
+    public breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnDestroy(): void {
@@ -43,7 +50,16 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('playlistid', this.ar.snapshot.paramMap.get('id'));
+    const layoutChanges = this.breakpointObserver.observe([
+      '(min-width: 900px)',
+      '(max-width: 768px)',
+      '(min-width: 769px)',
+      '(max-width: 620px)',
+    ]);
+
+    layoutChanges.subscribe((result) => {
+      this.mediaListener(result);
+    });
     const tempPlaylist = sessionStorage.getItem('userGeneratedTempPlaylist');
     if (!tempPlaylist) {
       const getSub: Subscription = this.playlistService
@@ -199,6 +215,17 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
         this.toast.error(error);
       }
     );
+  }
+
+  mediaListener(event) {
+    this.largeView = event.breakpoints['(min-width: 900px)'] ? true : false;
+    // this.largeView = event.breakpoints['(min-width: 769px)'] ? true : false;
+    this.smallView = event.breakpoints['(max-width: 620px)'] ? true : false;
+    if (this.largeView) {
+      this.titleWidth = '35';
+    } else if (this.smallView) {
+      this.titleWidth = this.defaultWidth;
+    }
   }
 
   openInSpotify(): void {

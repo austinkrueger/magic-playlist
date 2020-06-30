@@ -14,7 +14,7 @@
         </h1>
       </div>
 
-      <div class="playlist-actions">
+      <div class="playlist-actions" *ngIf="largeView">
         <button class="primary" (click)="loginSpotify()">
           Save this playlist
         </button>
@@ -22,24 +22,41 @@
           Create new playlist
         </button>
       </div>
+      <div class="playlist-actions" *ngIf="!largeView">
+        <ngx-menu #playlistmenu>
+          <a href="javascript:void(0);" (click)="loginSpotify()">
+            Save this playlist
+          </a>
+          <a href="javascript:void(0);" (click)="createNew()">
+            Create new playlist
+          </a>
+        </ngx-menu>
+        <img
+          class="more-button"
+          src="../../../assets/img/show-more-button-with-three-dots.svg"
+          (click)="playlistmenu.toggle($event)"
+        />
+      </div>
     </div>
     <div class="playlist-tracklist">
       <div class="track-header">
         <span class="header-item title">Title</span>
         <span class="header-item artist push-right">Artist</span>
-        <span class="header-item album">Album</span>
-        <span class="header-item length">Length</span>
+        <span class="header-item album" *ngIf="largeView">Album</span>
+        <span class="header-item length"
+          ><img class="header-item-img" src="../../../assets/img/clock.svg"
+        /></span>
       </div>
       <ng-container *ngFor="let track of playlist; let even = even">
         <div class="track-item" [class.offset-bg]="even">
           <span class="track-title">{{
-            track.name | truncate: ['35', '...']
+            track.name | truncate: [titleWidth, '...']
           }}</span>
           <span class="track-artist">
-            {{ getArtists(track) | truncate: ['20', '...'] }}
+            {{ getArtists(track) | truncate: [defaultWidth, '...'] }}
           </span>
-          <span class="track-album">{{
-            track.album.name | truncate: ['20', '...']
+          <span class="track-album" *ngIf="largeView">{{
+            track.album.name | truncate: [defaultWidth, '...']
           }}</span>
           <span class="track-length">{{
             track.duration_ms | durationParse

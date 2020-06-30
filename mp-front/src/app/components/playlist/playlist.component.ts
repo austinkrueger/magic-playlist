@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 // public playlist component
 @Component({
@@ -10,7 +11,14 @@ import { environment } from 'src/environments/environment';
 })
 export class PlaylistComponent implements OnInit {
   playlist: any;
-  constructor(private router: Router) {}
+  largeView = false;
+  smallView = false;
+  titleWidth = '35';
+  defaultWidth = '20';
+  constructor(
+    private router: Router,
+    public breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {
     console.log(
@@ -22,6 +30,16 @@ export class PlaylistComponent implements OnInit {
     if (!this.playlist) {
       this.router.navigate(['']);
     }
+
+    const layoutChanges = this.breakpointObserver.observe([
+      '(max-width: 768px)',
+      '(min-width: 769px)',
+      '(max-width: 620px)',
+    ]);
+
+    layoutChanges.subscribe((result) => {
+      this.mediaListener(result);
+    });
   }
 
   loginSpotify(): void {
@@ -48,5 +66,15 @@ export class PlaylistComponent implements OnInit {
       artistStr += track.artists[i].name;
     }
     return artistStr;
+  }
+
+  mediaListener(event) {
+    this.largeView = event.breakpoints['(min-width: 769px)'] ? true : false;
+    this.smallView = event.breakpoints['(max-width: 620px)'] ? true : false;
+    if (this.largeView) {
+      this.titleWidth = '35';
+    } else if (this.smallView) {
+      this.titleWidth = this.defaultWidth;
+    }
   }
 }

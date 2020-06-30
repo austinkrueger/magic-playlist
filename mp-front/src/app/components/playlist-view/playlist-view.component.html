@@ -1,5 +1,5 @@
 <div class="playlist-content animate fadeInBottom">
-  <div class="playlist-action-row" *ngIf="playlistId">
+  <div class="playlist-action-row" *ngIf="playlistId && largeView">
     <div class="tab re-export-tab" *ngIf="playlistUrl">
       <a href="javascript:void(0);" (click)="exportPlaylist()" class="tab-link"
         >Re-export playlist</a
@@ -54,7 +54,7 @@
         ></textarea>
       </div>
 
-      <div class="playlist-actions">
+      <div class="playlist-actions" *ngIf="largeView">
         <button class="primary" (click)="savePlaylist()" *ngIf="!playlistId">
           Save this playlist
         </button>
@@ -79,13 +79,65 @@
           Open in Spotify
         </button>
       </div>
+      <div class="playlist-actions" *ngIf="!largeView">
+        <ngx-menu #playlistmenu>
+          <a
+            href="javascript:void(0);"
+            (click)="savePlaylist()"
+            *ngIf="!playlistId"
+          >
+            Save this playlist
+          </a>
+          <a
+            href="javascript:void(0);"
+            (click)="createNew()"
+            *ngIf="!playlistId"
+          >
+            Create new playlist
+          </a>
+          <a
+            href="javascript:void(0);"
+            (click)="updatePlaylist()"
+            *ngIf="playlistId"
+          >
+            Update playlist
+          </a>
+          <a
+            href="javascript:void(0);"
+            (click)="exportPlaylist()"
+            *ngIf="playlistId && !playlistUrl"
+          >
+            Export to Spotify
+          </a>
+          <a
+            href="javascript:void(0);"
+            (click)="openInSpotify()"
+            *ngIf="playlistId && playlistUrl"
+          >
+            Open in Spotify
+          </a>
+          <a href="javascript:void(0);" (click)="exportPlaylist()"
+            >Re-export playlist</a
+          >
+          <a href="javascript:void(0);" (click)="deletePlaylist()"
+            >Delete playlist</a
+          >
+        </ngx-menu>
+        <img
+          class="more-button"
+          src="../../../assets/img/show-more-button-with-three-dots.svg"
+          (click)="playlistmenu.toggle($event)"
+        />
+      </div>
     </div>
     <div class="playlist-tracklist">
       <div class="track-header">
         <span class="header-item title">Title</span>
         <span class="header-item artist push-right">Artist</span>
-        <span class="header-item album">Album</span>
-        <span class="header-item length">Length</span>
+        <span class="header-item album" *ngIf="largeView">Album</span>
+        <span class="header-item length"
+          ><img class="header-item-img" src="../../../assets/img/clock.svg"
+        /></span>
       </div>
       <ng-container *ngFor="let track of playlist; let even = even">
         <div class="track-item" [class.offset-bg]="even">
@@ -95,7 +147,7 @@
           <span class="track-artist">
             {{ getArtists(track) | truncate: ['20', '...'] }}
           </span>
-          <span class="track-album">{{
+          <span class="track-album" *ngIf="largeView">{{
             track.album.name | truncate: ['20', '...']
           }}</span>
           <span class="track-length">{{

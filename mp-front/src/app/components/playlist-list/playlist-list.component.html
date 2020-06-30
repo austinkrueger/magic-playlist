@@ -6,7 +6,7 @@
           <span class="name">{{ playlist.name }}</span>
           <span class="description">{{ playlist.description }}</span>
         </div>
-        <div class="actions">
+        <div class="actions" *ngIf="largeView">
           <a
             class="action-link"
             href="javascript:void(0);"
@@ -20,6 +20,28 @@
             target="_blank"
             (click)="$event.stopPropagation()"
             >Open in Spotify</a
+          >
+        </div>
+        <div class="actions" *ngIf="!largeView">
+          <ngx-menu #optionmenu>
+            <a
+              href="javascript:void(0);"
+              (click)="viewPlaylist(playlist); $event.stopPropagation()"
+              >View playlist</a
+            >
+            <a
+              *ngIf="playlist['url']"
+              [href]="playlist['url']"
+              target="_blank"
+              (click)="$event.stopPropagation()"
+              >Open in Spotify</a
+            >
+          </ngx-menu>
+          <a
+            class="action-link"
+            href="javascript:void(0);"
+            (click)="optionmenu.toggle($event); $event.stopPropagation()"
+            >Options</a
           >
         </div>
       </div>
