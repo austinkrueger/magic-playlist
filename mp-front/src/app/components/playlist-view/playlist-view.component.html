@@ -15,7 +15,7 @@
     <div class="playlist-header">
       <div class="img-wrapper">
         <ng-container *ngFor="let track of playlist; let i = index">
-          <img *ngIf="i <= 3" [src]="track.album.images[1].url" />
+          <img *ngIf="i <= 3" [src]="track.album.images[0].url" />
         </ng-container>
       </div>
       <div class="playlist-info">

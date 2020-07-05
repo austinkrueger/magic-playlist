@@ -1,5 +1,5 @@
 .search-wrapper {
-  height: 30vh;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,8 +39,8 @@
     flex-direction: column;
     text-align: center;
     color: #545454;
-    width: 120px;
-    height: 180px;
+    width: 180px;
+    height: 240px;
     margin: 10px;
     padding: 20px 40px;
     background: #fff;
@@ -58,8 +58,8 @@
 
     .artist-image {
       clip-path: circle(30px at center);
-      height: 64px;
-      width: 64px;
+      height: 90px;
+      width: 90px;
       padding: 5px;
     }
 
@@ -72,6 +72,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 15px;
     }
 
     &:hover {
@@ -92,9 +93,9 @@
       width: 80vw;
     }
   }
-  .search-results {
-    padding: 10px 50px;
-  }
+  // .search-results {
+  //   padding: 10px 50px;
+  // }
 }
 @media (max-width: 900px) {
   .search-wrapper {
@@ -102,9 +103,9 @@
       font-size: 2.5rem;
     }
   }
-  .search-results {
-    padding: 10px 30px;
-  }
+  // .search-results {
+  //   padding: 10px 30px;
+  // }
 }
 @media (max-width: 600px) {
   .search-wrapper {
