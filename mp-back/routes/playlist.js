@@ -20,6 +20,24 @@ function getPlaylists(req, res) {
     /playlist
  */
 function postPlaylist(req, res) {
+  var data = req.body.playlist;
+  var trackData = [];
+  data.tracks.forEach((track) => {
+    let trackInfo = {
+      album: {
+        name: track.album.name,
+        images: [track.album.images[1]],
+        id: track.album.id,
+      },
+      artists: track.album.artists,
+      duration_ms: track.duration_ms,
+      name: track.name,
+      id: track.id,
+      uri: track.uri,
+    };
+    trackData.push(trackInfo);
+  });
+  req.body.playlist.tracks = trackData;
   var newPlaylist = new Playlist(req.body.playlist);
   newPlaylist
     .save()
@@ -70,8 +88,6 @@ function updatePlaylist(req, res) {
       playlist.description = req.body.playlist.description;
       playlist.tracks = req.body.playlist.tracks;
       playlist.url = req.body.playlist.url;
-      playlist.public = req.body.playlist.public;
-      playlist.collaborative = req.body.playlist.collaborative;
 
       playlist
         .save()

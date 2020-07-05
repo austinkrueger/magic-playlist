@@ -13,14 +13,6 @@ let Playlist = new Schema({
   url: {
     type: String,
   },
-  collaborative: {
-    type: Boolean,
-    default: false,
-  },
-  public: {
-    type: Boolean,
-    default: false,
-  },
   tracks: {
     type: Array,
     default: [],

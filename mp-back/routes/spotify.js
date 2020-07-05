@@ -114,9 +114,6 @@ function generateTrackUriList(tracks) {
 }
 
 // post to api
-function searchArtist() {}
-
-// post to api
 function searchArtists(req, res) {
   authClient().then((response) => {
     let client_token = response.data.access_token;

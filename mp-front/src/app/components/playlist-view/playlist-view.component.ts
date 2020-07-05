@@ -116,8 +116,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       tracks: this.playlist,
       name: this.playlistTitle,
       description: this.playlistDesc,
-      collaborative: false,
-      public: true,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
     };
     const addSub: Subscription = this.playlistService
@@ -142,8 +140,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       tracks: this.playlist,
       name: this.playlistTitle,
       description: this.playlistDesc,
-      collaborative: false,
-      public: true,
       _id: this.playlistId,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
     };
@@ -170,8 +166,6 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
       name: this.playlistTitle,
       tracks: this.playlist,
       spotify_uid: sessionStorage.getItem('spotifyUserId'),
-      collaborative: false,
-      public: true,
     };
     const exportSub: Subscription = this.spotifyService
       .exportPlaylist(postdata)
@@ -179,12 +173,11 @@ export class PlaylistViewComponent implements OnInit, OnDestroy {
         (response: any) => {
           this.playlistUrl = response.externalUrl;
           postdata['url'] = response.externalUrl;
-          // this.playlist.spotify_playlist_id = response.playlistId;
           this.toast.success('Playlist Successfully Exported!', 'Success!');
           const updateSub = this.playlistService
             .updatePlaylist(postdata)
             .subscribe(
-              (updateRes: any) => {
+              () => {
                 // silently succeed updating the playlist url
               },
               (updateErr: any) => {
