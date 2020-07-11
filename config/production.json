@@ -1,0 +1,4 @@
+{
+  "DBHost": "mongodb://localhost:27017/magic-playlist",
+  "redir_uri": "localhost:4200/auth/spotify_login/spotify_redirect"
+}
