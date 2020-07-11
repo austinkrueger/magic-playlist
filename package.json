@@ -9,7 +9,7 @@
     "test": "mocha",
     "dev": "set NODE_ENV=dev && babel-watch app.js",
     "start": "set NODE_ENV=prod && node app.js",
-    "heroku-postbuild": "cd mp-front/ && ng build --output-path dist"
+    "heroku-postbuild": "cd mp-front/ && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
