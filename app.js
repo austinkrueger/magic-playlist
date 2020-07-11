@@ -8,6 +8,7 @@ let expressJwt = require('express-jwt');
 let fs = require('fs');
 let playlist = require('./routes/playlist');
 let spotify = require('./routes/spotify');
+const PORT = process.env.PORT || 4000;
 require('dotenv').config();
 
 const app = express();
@@ -71,8 +72,6 @@ app
   .route('/api/spotify/playlist/export')
   .post(checkIfAuthenticated, spotify.createPlaylist);
 
-app.listen(process.env.PORT || 4000, () =>
-  console.log(`Express server running on port 4000`)
-);
+app.listen(PORT, () => console.log(`Express server running on port 4000`));
 
 module.exports = app; // for testing
