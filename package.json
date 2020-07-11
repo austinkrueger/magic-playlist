@@ -2,6 +2,9 @@
   "name": "mp-back",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "test": "mocha",
     "dev": "set NODE_ENV=dev && babel-watch app.js",
