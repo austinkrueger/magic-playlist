@@ -14,7 +14,10 @@ const app = express();
 app.use(cors());
 
 //db connection
-mongoose.connect(config.DBHost, { useNewUrlParser: true });
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost:27017/magic-playlist',
+  { useNewUrlParser: true }
+);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
