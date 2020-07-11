@@ -15,16 +15,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/node": "^7.10.4",
     "@babel/preset-env": "^7.10.2",
     "babel-watch": "^7.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^8.0.1"
-  },
-  "dependencies": {
+    "mocha": "^8.0.1",
     "@babel/core": "^7.10.2",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
