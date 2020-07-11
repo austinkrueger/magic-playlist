@@ -33,6 +33,10 @@ const checkIfAuthenticated = expressJwt({
   secret: RSA_PUBLIC_KEY,
 });
 
+// set up Angular directory
+var distDir = __dirname + '/dist/';
+app.use(express.static(distDir));
+
 //parse application/json and look for raw text
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

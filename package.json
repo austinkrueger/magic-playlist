@@ -5,7 +5,8 @@
   "scripts": {
     "test": "mocha",
     "dev": "set NODE_ENV=dev && babel-watch app.js",
-    "start": "set NODE_ENV=prod && node app.js"
+    "start": "set NODE_ENV=prod && node app.js",
+    "postinstall": "cd mp-front/ && ng build --output-path dist"
   },
   "keywords": [],
   "author": "",
