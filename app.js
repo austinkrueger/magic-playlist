@@ -37,6 +37,10 @@ const checkIfAuthenticated = expressJwt({
 var distDir = __dirname + '/mp-front/dist/';
 app.use(express.static(distDir));
 
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, '/mp-front/dist', 'index.html'));
+});
+
 //parse application/json and look for raw text
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
