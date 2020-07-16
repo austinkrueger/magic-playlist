@@ -34,7 +34,7 @@ const checkIfAuthenticated = expressJwt({
 });
 
 // set up Angular directory
-var distDir = __dirname + '/dist/';
+var distDir = __dirname + '/mp-front/dist/';
 app.use(express.static(distDir));
 
 //parse application/json and look for raw text
@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
-// app.get('/', (req, res) => res.json({ message: 'magic-playlist api' }));
+app.get('/', (req, res) => res.send('Welcome to Magic Playlist'));
 
 app
   .route('/playlist')
