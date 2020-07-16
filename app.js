@@ -4,6 +4,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let config = require('config');
+let path = require('path');
 let expressJwt = require('express-jwt');
 let playlist = require('./routes/playlist');
 let spotify = require('./routes/spotify');
