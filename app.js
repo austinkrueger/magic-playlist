@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json' }));
 
-app.get('/', (req, res) => res.json({ message: 'magic-playlist api' }));
+// app.get('/', (req, res) => res.json({ message: 'magic-playlist api' }));
 
 app
   .route('/playlist')
