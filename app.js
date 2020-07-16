@@ -46,12 +46,12 @@ app.use(bodyParser.json({ type: 'application/json' }));
 app.get('/', (req, res) => res.send('Welcome to Magic Playlist'));
 
 app
-  .route('/playlist')
+  .route('/api/playlist')
   .get(playlist.getPlaylists)
   .post(checkIfAuthenticated, playlist.postPlaylist);
 
 app
-  .route('/playlist/:id')
+  .route('/api/playlist/:id')
   .get(playlist.getPlaylist)
   .delete(checkIfAuthenticated, playlist.deletePlaylist)
   .put(checkIfAuthenticated, playlist.updatePlaylist);

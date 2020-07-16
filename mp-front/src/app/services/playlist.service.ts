@@ -12,28 +12,28 @@ export class PlaylistService {
   constructor(private http: HttpClient) {}
 
   getPlaylistsByUser(userId: string): Observable<any> {
-    return this.http.get(`${this.uri}/playlist`, {
+    return this.http.get(`${this.uri}/api/playlist`, {
       params: { user_id: userId },
     });
   }
 
   getPlaylist(playlistId: string): Observable<any> {
-    return this.http.get(`${this.uri}/playlist/${playlistId}`);
+    return this.http.get(`${this.uri}/api/playlist/${playlistId}`);
   }
 
   addPlaylist(playlist: any): Observable<any> {
-    return this.http.post(`${this.uri}/playlist`, {
+    return this.http.post(`${this.uri}/api/playlist`, {
       playlist: playlist,
     });
   }
 
   updatePlaylist(playlist: any): Observable<any> {
-    return this.http.put(`${this.uri}/playlist/${playlist._id}`, {
+    return this.http.put(`${this.uri}/api/playlist/${playlist._id}`, {
       playlist: playlist,
     });
   }
 
   deletePlaylist(playlistId: string): Observable<any> {
-    return this.http.delete(`${this.uri}/playlist/${playlistId}`);
+    return this.http.delete(`${this.uri}/api/playlist/${playlistId}`);
   }
 }
