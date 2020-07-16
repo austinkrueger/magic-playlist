@@ -30,6 +30,7 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
 const JWT_SECRET = process.env.JWT_SECRET;
 const checkIfAuthenticated = expressJwt({
   secret: JWT_SECRET,
+  algorithms: ['HS256'],
 });
 
 // set up Angular directory
