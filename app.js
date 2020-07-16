@@ -5,7 +5,6 @@ let mongoose = require('mongoose');
 let morgan = require('morgan');
 let config = require('config');
 let expressJwt = require('express-jwt');
-let fs = require('fs');
 let playlist = require('./routes/playlist');
 let spotify = require('./routes/spotify');
 const PORT = process.env.PORT || 4000;
@@ -28,10 +27,9 @@ if (config.util.getEnv('NODE_ENV') !== 'test') {
   app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
 }
 
-const RSA_PUBLIC_KEY = fs.readFileSync('./config/jwtRS256.key.pub');
-// const RSA_PUBLIC_KEY = process.env.JWT_PUBLIC_KEY.replace(/\\n/g, '\n');
+const JWT_SECRET = process.env.JWT_SECRET;
 const checkIfAuthenticated = expressJwt({
-  secret: RSA_PUBLIC_KEY,
+  secret: JWT_SECRET,
 });
 
 // set up Angular directory

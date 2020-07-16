@@ -2,14 +2,13 @@ let SpotifyWebApi = require('spotify-web-api-node');
 let axios = require('axios');
 require('dotenv').config();
 let jwt = require('jsonwebtoken');
-let fs = require('fs');
 
 // const redirUri =
 // 'http://localhost:4200/auth/spotify_login?return_to=playlist_view';
 const clientId = process.env.SPOTIFY_API_CLIENT;
 const clientSecret = process.env.SPOTIFY_API_SECRET;
 
-const RSA_PRIVATE_KEY = fs.readFileSync('./config/jwtRS256.key');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 var spotifyApi = new SpotifyWebApi();
 /*
@@ -42,8 +41,8 @@ function getMe(req, res) {
     function (data) {
       // create our jwt token for accessing data
       const expiresIn = 2400;
-      const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
-        algorithm: 'RS256',
+      const jwtBearerToken = jwt.sign({}, JWT_SECRET, {
+        algorithm: 'HS256',
         expiresIn: expiresIn,
         subject: data.body.id,
       });
