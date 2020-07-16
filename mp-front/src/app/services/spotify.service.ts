@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SpotifyService {
-  uri = 'http://localhost:4000';
+  uri = environment.backendUrl;
 
   constructor(
     private http: HttpClient,

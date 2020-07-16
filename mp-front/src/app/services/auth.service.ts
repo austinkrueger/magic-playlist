@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class AuthService {
-  uri = 'http://localhost:4000';
+  uri = environment.backendUrl;
   constructor(
     private http: HttpClient,
     private router: Router,

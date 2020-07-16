@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   redirUri: 'http://localhost:4200/auth/spotify_login',
   clientId: 'e2e60f39a4e44e9ba073f4594dfd4e73',
+  backendUrl: 'http://localhost:4000',
 };
 
 /*
