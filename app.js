@@ -17,13 +17,15 @@ app.use(cors());
 //db connection
 mongoose.connect(
   process.env.MONGODB_URI || 'mongodb://localhost:27017/magic-playlist',
-  { useNewUrlParser: true }
+  {
+    useNewUrlParser: true,
+  }
 );
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 //don't show the log when it is test
-if (config.util.getEnv('NODE_ENV') !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
   //use morgan to log at command line
   app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
 }
@@ -34,13 +36,15 @@ const checkIfAuthenticated = expressJwt({
   algorithms: ['HS256'],
 });
 
-// set up Angular directory
-var distDir = __dirname + '/mp-front/dist/';
-app.use(express.static(distDir));
+if (process.env.NODE_ENV === 'production') {
+  // set up Angular directory
+  var distDir = __dirname + '/mp-front/dist/';
+  app.use(express.static(distDir));
 
-app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname, '/mp-front/dist', 'index.html'));
-});
+  app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, '/mp-front/dist', 'index.html'));
+  });
+}
 
 //parse application/json and look for raw text
 app.use(bodyParser.json());
@@ -50,14 +54,14 @@ app.use(bodyParser.json({ type: 'application/json' }));
 
 app.get('/', (req, res) => res.send('Welcome to Magic Playlist'));
 
+app.route('/api/playlist').post(playlist.getPlaylists);
 app
-  .route('/api/playlist')
-  .get(playlist.getPlaylists)
+  .route('/api/playlist/add')
   .post(checkIfAuthenticated, playlist.postPlaylist);
 
 app
   .route('/api/playlist/:id')
-  .get(playlist.getPlaylist)
+  .post(playlist.getPlaylist)
   .delete(checkIfAuthenticated, playlist.deletePlaylist)
   .put(checkIfAuthenticated, playlist.updatePlaylist);
 

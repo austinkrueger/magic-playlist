@@ -12,17 +12,17 @@ export class PlaylistService {
   constructor(private http: HttpClient) {}
 
   getPlaylistsByUser(userId: string): Observable<any> {
-    return this.http.get(`${this.uri}/api/playlist`, {
-      params: { user_id: userId },
-    });
+    return this.http.post(`${this.uri}/api/playlist`, { user_id: userId });
   }
 
   getPlaylist(playlistId: string): Observable<any> {
-    return this.http.get(`${this.uri}/api/playlist/${playlistId}`);
+    return this.http.post(`${this.uri}/api/playlist/${playlistId}`, {
+      id: playlistId,
+    });
   }
 
   addPlaylist(playlist: any): Observable<any> {
-    return this.http.post(`${this.uri}/api/playlist`, {
+    return this.http.post(`${this.uri}/api/playlist/add`, {
       playlist: playlist,
     });
   }

@@ -5,7 +5,7 @@ let Playlist = require('../models/playlist');
     /playlist
 */
 function getPlaylists(req, res) {
-  let query = Playlist.find({ spotify_uid: req.query.user_id });
+  let query = Playlist.find({ spotify_uid: req.body.user_id });
   query.exec((err, playlists) => {
     if (err) {
       res.status(400).send(err);
@@ -54,7 +54,7 @@ function postPlaylist(req, res) {
     /playlist/:id
 */
 function getPlaylist(req, res) {
-  Playlist.findById(req.params.id, (err, playlist) => {
+  Playlist.findById(req.body.id, (err, playlist) => {
     if (err) res.status(400).send(err);
     else res.status(200).json(playlist);
   });
