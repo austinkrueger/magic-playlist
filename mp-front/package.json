@@ -24,7 +24,7 @@
     "@angular/router": "~9.0.2",
     "@ngx-lite/menus": "^0.2.4",
     "@ngx-lite/util": "0.0.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "ngx-toastr": "^12.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
